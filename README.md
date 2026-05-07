@@ -39,7 +39,7 @@ That observation is the thesis of this curriculum. The system around the AI is w
 enterprise-ai-architect/
 ├── README.md
 ├── versions.md          # exact tool versions per phase
-├── session-state.md     # 3 lines at end of every session
+├── session-state.md     # state all points of friction at end of every session
 ├── decisions.md         # technical decisions with reasoning
 ├── error-log.md         # debugging history and solutions
 ├── adr-log.md           # architectural decision records
