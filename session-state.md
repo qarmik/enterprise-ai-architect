@@ -6,16 +6,15 @@
 **Date:** YYYY-MM-DD
 **Working on:** [artifact or task]
 **Next step:** [one specific next action]
-**Confused by:** [one genuine uncertainty]
+**Confused by:** [sate all points of friction]
 ---
 
-## Session 1 — 2026-04-30
+## Session 1 — 2026-05-07
 ---
-**Date:** 2026-04-30
+**Date:** 2026-05-07
 **Working on:** Phase 0 — creating repository and system files
 **Next step:** Complete Phase 0 folder structure and commit all files - Done
-**Confused by:** # Phase 0 — Confusion & Resolution Log
-
+**Confused by:** # Phase 0 — Confusion & Resolution Log - stating all points of friction :
 ## 1. `git config user.name` — Username vs. Full Name
 **Confusion:** I wasn't sure whether to put my GitHub username (`qarmik`) or my real name (`Rohit Kumar`).
 **Resolution:** It should be my real full name. I also accidentally set `user.name` to my email address — I had to re-run the command correctly.
