@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enterprise AI Architect — Study Tracker</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Crimson+Pro:wght@400;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#04080f;--bg2:#080e1a;--bg3:#0c1422;--bg4:#101c2e;
+  --b1:#1a3050;--b2:#1f3d63;
+  --primary:#3b82f6;--p2:#60a5fa;--p3:#93c5fd;
+  --accent:#f59e0b;--a2:#fbbf24;
+  --green:#10b981;--g2:#34d399;--g3:#6ee7b7;
+  --red:#ef4444;--r2:#fca5a5;
+  --purple:#8b5cf6;--pu2:#a78bfa;
+  --cyan:#06b6d4;--cy2:#22d3ee;
+  --orange:#f97316;
+  --text:#e2e8f0;--t2:#94a3b8;--t3:#64748b;--t4:#475569;--white:#fff;
+  --sw:258px;--hh:52px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:15px}
+body{font-family:'Crimson Pro',serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh;overflow-x:hidden}
+button{cursor:pointer;font-family:inherit}
+input,textarea,select{font-family:inherit}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--b2);border-radius:2px}
+
+.sidebar{width:var(--sw);background:var(--bg2);border-right:1px solid var(--b1);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;overflow-y:auto}
+.sb-logo{padding:.95rem 1.1rem .8rem;border-bottom:1px solid var(--b1)}
+.sb-mark{font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:.22em;text-transform:uppercase;color:var(--primary);display:block;margin-bottom:.18rem}
+.sb-title{font-family:'Syne',sans-serif;font-size:.86rem;font-weight:700;color:var(--white);line-height:1.2}
+.sb-prog{padding:.7rem 1.1rem;border-bottom:1px solid var(--b1)}
+.sb-prog-row{display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:.57rem;color:var(--t3);text-transform:uppercase;margin-bottom:.3rem}
+.prog-bar{height:3px;background:var(--bg4);border-radius:2px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--primary),var(--accent));transition:width .5s}
+.sb-nav{flex:1;padding:.28rem 0}
+.nav-sec{font-family:'JetBrains Mono',monospace;font-size:.54rem;letter-spacing:.15em;text-transform:uppercase;color:var(--t4);padding:.6rem 1.1rem .18rem}
+.nav-btn{display:flex;align-items:center;gap:.48rem;padding:.4rem 1.1rem;font-family:'Syne',sans-serif;font-size:.76rem;font-weight:500;color:var(--t2);cursor:pointer;border:none;background:none;width:100%;text-align:left;border-left:2px solid transparent;transition:all .15s}
+.nav-btn:hover{color:var(--text);background:var(--bg3)}
+.nav-btn.active{color:var(--p2);background:rgba(59,130,246,.08);border-left-color:var(--primary)}
+.nav-icon{font-size:.84rem;width:1rem;text-align:center;flex-shrink:0}
+.nav-badge{margin-left:auto;background:var(--bg4);color:var(--t3);font-family:'JetBrains Mono',monospace;font-size:.53rem;padding:.07em .34em;border-radius:3px}
+.nav-btn.active .nav-badge{background:rgba(59,130,246,.2);color:var(--p2)}
+
+.main{margin-left:var(--sw);display:flex;flex-direction:column;min-height:100vh}
+.topbar{height:var(--hh);background:var(--bg2);border-bottom:1px solid var(--b1);display:flex;align-items:center;padding:0 1.4rem;gap:1rem;position:sticky;top:0;z-index:50}
+.tb-title{font-family:'Syne',sans-serif;font-size:.83rem;font-weight:700;color:var(--white);flex:1}
+.content{padding:1.3rem;flex:1}
+
+.btn{font-family:'Syne',sans-serif;font-size:.72rem;font-weight:600;padding:.33rem .78rem;border-radius:4px;border:none;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:.26rem}
+.btn-primary{background:var(--primary);color:#fff}.btn-primary:hover{background:var(--p2)}
+.btn-accent{background:var(--accent);color:var(--bg)}.btn-accent:hover{background:var(--a2)}
+.btn-ghost{background:transparent;color:var(--t2);border:1px solid var(--b2)}.btn-ghost:hover{background:var(--bg3);color:var(--text)}
+.btn-danger{background:transparent;color:var(--red);border:1px solid rgba(239,68,68,.3);font-size:.66rem;padding:.2em .46em}.btn-danger:hover{background:rgba(239,68,68,.1)}
+.btn-sm{padding:.23rem .5rem;font-size:.66rem}
+.btn-purple{background:var(--purple);color:#fff}.btn-purple:hover{background:var(--pu2)}
+
+.panel{display:none}.panel.active{display:block}
+
+.fi{background:var(--bg3);border:1px solid var(--b2);border-radius:4px;padding:.38rem .65rem;color:var(--text);font-size:.82rem;width:100%;transition:border-color .15s}
+.fi:focus{outline:none;border-color:var(--primary)}
+.fi::placeholder{color:var(--t3)}
+select.fi{cursor:pointer}
+textarea.fi{resize:vertical;min-height:66px;line-height:1.6}
+.fl{font-family:'JetBrains Mono',monospace;font-size:.57rem;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);display:block;margin-bottom:.2rem}
+.fg{margin-bottom:.65rem}
+.row{display:flex;gap:.52rem;align-items:flex-start}
+
+.card{background:var(--bg2);border:1px solid var(--b1);border-radius:7px;overflow:hidden;margin-bottom:.85rem}
+.card-hd{padding:.68rem 1.1rem;border-bottom:1px solid var(--b1);background:var(--bg3);display:flex;align-items:center;gap:.48rem}
+.card-icon{font-size:.86rem}
+.card-title{font-family:'Syne',sans-serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--t2)}
+.card-body{padding:1.05rem}
+
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:.68rem;margin-bottom:1.1rem}
+@media(max-width:700px){.grid4{grid-template-columns:1fr 1fr}}
+.stat-card{background:var(--bg2);border:1px solid var(--b1);border-radius:7px;padding:.88rem 1rem;text-align:center;border-top:2px solid transparent}
+.sc-blue{border-top-color:var(--primary)}.sc-gold{border-top-color:var(--accent)}.sc-green{border-top-color:var(--green)}.sc-purple{border-top-color:var(--purple)}
+.sn{font-family:'Syne',sans-serif;font-size:1.65rem;font-weight:800;color:var(--white);display:block;line-height:1}
+.sl{font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);display:block;margin-top:.26rem}
+
+.sec-t{font-family:'Syne',sans-serif;font-size:.8rem;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.06em;margin:.9rem 0 .42rem;display:flex;align-items:center;gap:.48rem}
+.sec-t::after{content:'';flex:1;height:1px;background:var(--b1)}
+
+/* ENERGY */
+.energy-sel{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.42rem;margin-top:.26rem}
+@media(max-width:560px){.energy-sel{grid-template-columns:1fr}}
+.energy-btn{padding:.52rem .68rem;border-radius:5px;border:1.5px solid;font-family:'Syne',sans-serif;font-size:.7rem;font-weight:700;cursor:pointer;transition:all .15s;text-align:left;line-height:1.3}
+.eb-green{background:rgba(16,185,129,.07);border-color:rgba(16,185,129,.25);color:var(--g2)}
+.eb-yellow{background:rgba(245,158,11,.07);border-color:rgba(245,158,11,.25);color:var(--a2)}
+.eb-red{background:rgba(239,68,68,.07);border-color:rgba(239,68,68,.22);color:var(--r2)}
+.energy-btn.sel{box-shadow:0 0 0 2px currentColor;font-weight:800}
+.eb-green.sel{background:rgba(16,185,129,.14)}
+.eb-yellow.sel{background:rgba(245,158,11,.14)}
+.eb-red.sel{background:rgba(239,68,68,.12)}
+
+/* META TALLY */
+.meta-tally{background:var(--bg3);border:1px solid var(--b1);border-radius:6px;padding:.82rem;margin-top:.68rem}
+.mt-title{font-family:'Syne',sans-serif;font-size:.7rem;font-weight:700;color:var(--t2);margin-bottom:.52rem;display:flex;justify-content:space-between;align-items:center}
+.mt-budget{font-family:'JetBrains Mono',monospace;font-size:.64rem;padding:.13em .48em;border-radius:3px}
+.mt-ok{background:rgba(16,185,129,.12);color:var(--g2);border:1px solid rgba(16,185,129,.2)}
+.mt-over{background:rgba(239,68,68,.12);color:var(--r2);border:1px solid rgba(239,68,68,.2)}
+.mt-grid{display:grid;grid-template-columns:1fr 1fr;gap:.28rem .75rem;margin-bottom:.45rem}
+.mt-row{display:flex;align-items:center;gap:.38rem;font-size:.79rem;color:var(--t2)}
+.mt-label{flex:1;font-size:.77rem}
+.mt-row input{width:46px;background:var(--bg4);border:1px solid var(--b1);border-radius:3px;padding:.17rem .33rem;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:.7rem;text-align:center}
+.mt-total-row{display:flex;justify-content:space-between;font-size:.77rem;color:var(--t3);padding-top:.38rem;border-top:1px solid var(--b1)}
+
+/* LOG */
+.log-entry{background:var(--bg2);border:1px solid var(--b1);border-radius:6px;padding:.82rem .95rem;margin-bottom:.52rem;position:relative}
+.le-header{display:flex;align-items:center;gap:.48rem;margin-bottom:.32rem;flex-wrap:wrap}
+.le-date{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--t3)}
+.le-tag{font-family:'JetBrains Mono',monospace;font-size:.57rem;background:rgba(59,130,246,.12);color:var(--p2);padding:.08em .42em;border-radius:3px}
+.le-hrs{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--a2);margin-left:auto}
+.le-done{font-size:.77rem;color:var(--t3);font-style:italic;margin-bottom:.28rem;border-left:2px solid var(--b1);padding-left:.5rem}
+.le-what{font-size:.88rem;color:var(--t2)}
+.le-dq{font-size:.76rem;color:var(--t3);margin-top:.26rem}
+
+/* GRID 3 */
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:.72rem}
+@media(max-width:800px){.grid3{grid-template-columns:1fr 1fr}}
+@media(max-width:500px){.grid3{grid-template-columns:1fr}}
+
+/* LEVEL CARD */
+.level-card{background:var(--bg2);border:1px solid var(--b1);border-radius:7px;padding:.95rem 1.1rem;border-top:2px solid var(--lc-color,var(--primary))}
+.lc-phase{font-family:'JetBrains Mono',monospace;font-size:.57rem;letter-spacing:.12em;text-transform:uppercase;color:var(--lc-color,var(--primary));margin-bottom:.28rem}
+.lc-name{font-family:'Syne',sans-serif;font-size:.86rem;font-weight:700;color:var(--white);margin-bottom:.26rem}
+.lc-meta{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--t3);margin-bottom:.52rem}
+.lc-pitch{font-size:.8rem;color:var(--t2);line-height:1.6;margin-bottom:.62rem}
+.lc-prog{height:4px;background:var(--bg4);border-radius:2px;overflow:hidden;margin-bottom:.42rem}
+.lc-prog-fill{height:100%;background:var(--lc-color,var(--primary));transition:width .4s}
+.lc-status-row{display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:.57rem;color:var(--t3)}
+
+/* MILESTONE */
+.ms-group{margin-bottom:1.05rem}
+.ms-group-hd{font-family:'Syne',sans-serif;font-size:.72rem;font-weight:700;color:var(--t2);padding:.48rem .68rem;background:var(--bg3);border:1px solid var(--b1);border-radius:5px;margin-bottom:.35rem;display:flex;justify-content:space-between;align-items:center}
+.ms-group-prog{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--t3)}
+.ms-item{display:flex;align-items:flex-start;gap:.58rem;padding:.42rem .52rem;border-radius:4px;cursor:pointer;transition:background .12s}
+.ms-item:hover{background:var(--bg3)}
+.ms-check{width:14px;height:14px;border-radius:3px;border:1.5px solid var(--b2);flex-shrink:0;margin-top:.2rem;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.ms-check.done{background:var(--green);border-color:var(--green)}
+.ms-check.done::after{content:'✓';font-size:.58rem;color:#fff}
+.ms-txt{font-size:.86rem;color:var(--t2);line-height:1.5}
+.ms-txt.done{color:var(--t4);text-decoration:line-through}
+.ms-dt{font-family:'JetBrains Mono',monospace;font-size:.57rem;color:var(--t4);margin-top:.16rem}
+
+/* NOTES */
+.notes-layout{display:grid;grid-template-columns:210px 1fr;gap:.68rem;height:calc(100vh - 130px)}
+@media(max-width:640px){.notes-layout{grid-template-columns:1fr;height:auto}}
+.notes-list{background:var(--bg2);border:1px solid var(--b1);border-radius:7px;overflow:hidden;display:flex;flex-direction:column}
+.nl-hd{padding:.62rem .82rem;border-bottom:1px solid var(--b1);display:flex;align-items:center;justify-content:space-between;background:var(--bg3)}
+.nl-title{font-family:'Syne',sans-serif;font-size:.72rem;font-weight:700;color:var(--t2)}
+.nl-items{flex:1;overflow-y:auto}
+.nl-item{padding:.52rem .82rem;cursor:pointer;border-left:2px solid transparent;font-size:.83rem;color:var(--t2);transition:all .12s;border-bottom:1px solid rgba(26,48,80,.3)}
+.nl-item:hover{background:var(--bg3)}.nl-item.active{color:var(--p2);border-left-color:var(--primary);background:rgba(59,130,246,.06)}
+.nl-item-title{font-weight:600;font-family:'Syne',sans-serif;font-size:.76rem}
+.nl-item-lv{font-family:'JetBrains Mono',monospace;font-size:.56rem;color:var(--t4)}
+.note-editor{background:var(--bg2);border:1px solid var(--b1);border-radius:7px;overflow:hidden;display:flex;flex-direction:column}
+.ne-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.68rem;color:var(--t4);font-size:.86rem;min-height:200px}
+.ne-hd{padding:.62rem .88rem;border-bottom:1px solid var(--b1);background:var(--bg3);display:flex;align-items:center;gap:.48rem}
+.ne-title-input{flex:1;background:transparent;border:none;color:var(--white);font-family:'Syne',sans-serif;font-size:.88rem;font-weight:700}
+.ne-title-input:focus{outline:none}
+.ne-body{flex:1;background:transparent;border:none;color:var(--text);padding:.88rem;font-size:.9rem;line-height:1.75;resize:none;font-family:'Crimson Pro',serif;min-height:300px}
+.ne-body:focus{outline:none}
+
+/* RESOURCES */
+.res-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:.62rem;margin-top:.68rem}
+.res-card{background:var(--bg2);border:1px solid var(--b1);border-radius:6px;padding:.78rem .92rem}
+.rc-type{font-family:'JetBrains Mono',monospace;font-size:.54rem;color:var(--t4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.22rem}
+.rc-title{font-family:'Syne',sans-serif;font-size:.8rem;font-weight:700;color:var(--white);margin-bottom:.22rem}
+.rc-lv{font-family:'JetBrains Mono',monospace;font-size:.56rem;color:var(--t3);margin-bottom:.28rem}
+.rc-desc{font-size:.78rem;color:var(--t2);line-height:1.55;margin-bottom:.52rem}
+.rc-actions{display:flex;gap:.36rem;align-items:center}
+.add-form{background:var(--bg3);border:1px solid var(--b1);border-radius:6px;padding:.88rem;margin-bottom:.72rem;display:none}
+.add-form.open{display:block}
+
+/* ERROR / SS / ADR / DEC */
+.list-item{background:var(--bg2);border:1px solid var(--b1);border-radius:6px;padding:.82rem .95rem;margin-bottom:.52rem}
+.li-hd{display:flex;align-items:center;gap:.48rem;flex-wrap:wrap;margin-bottom:.36rem}
+.li-date{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--t3)}
+.li-tag{font-family:'JetBrains Mono',monospace;font-size:.56rem;padding:.07em .38em;border-radius:3px}
+.li-tag-err{background:rgba(239,68,68,.12);color:var(--r2)}
+.li-tag-ss{background:rgba(59,130,246,.12);color:var(--p2)}
+.li-tag-adr{background:rgba(139,92,246,.12);color:var(--pu2)}
+.li-tag-dec{background:rgba(245,158,11,.12);color:var(--a2)}
+.li-err-box{font-family:'JetBrains Mono',monospace;font-size:.76rem;color:var(--r2);background:rgba(239,68,68,.06);padding:.38rem .58rem;border-radius:4px;border-left:2px solid var(--red);margin-bottom:.32rem}
+.li-body{font-size:.86rem;color:var(--t2);line-height:1.65}
+.li-label{font-family:'JetBrains Mono',monospace;font-size:.57rem;color:var(--t4);text-transform:uppercase;letter-spacing:.08em}
+.li-field{font-size:.86rem;color:var(--t2);margin-bottom:.24rem}
+.li-title{font-family:'Syne',sans-serif;font-size:.88rem;font-weight:700;color:var(--white);margin-bottom:.28rem}
+.status-ok{color:var(--g2)}.status-open{color:var(--a2)}
+
+/* WINS */
+.win-item{background:var(--bg2);border:1px solid rgba(245,158,11,.18);border-radius:6px;padding:.72rem .95rem;margin-bottom:.48rem;display:flex;align-items:flex-start;gap:.58rem}
+.win-star{font-size:1.05rem;flex-shrink:0}
+.win-txt{font-size:.88rem;color:var(--text);flex:1}
+.win-date{font-family:'JetBrains Mono',monospace;font-size:.56rem;color:var(--t4);margin-top:.16rem}
+
+/* LOG TABLE */
+.log-table{width:100%;border-collapse:collapse;font-size:.8rem}
+.log-table th{font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);text-align:left;padding:.42rem .68rem;border-bottom:1px solid var(--b1);background:var(--bg3)}
+.log-table td{padding:.48rem .68rem;border-bottom:1px solid rgba(26,48,80,.3);color:var(--t2);vertical-align:top}
+.log-table tr:last-child td{border-bottom:none}
+
+/* REVIEW */
+.rev-q{margin-bottom:.82rem}
+.rev-q-lbl{font-family:'Syne',sans-serif;font-size:.78rem;font-weight:700;color:var(--white);margin-bottom:.3rem}
+.rev-q-hint{font-size:.78rem;color:var(--t3);margin-bottom:.36rem;font-style:italic}
+.exit-grid{display:grid;grid-template-columns:1fr 1fr;gap:.38rem;margin-top:.46rem}
+@media(max-width:560px){.exit-grid{grid-template-columns:1fr}}
+.exit-item{display:flex;align-items:flex-start;gap:.42rem;background:var(--bg3);border:1px solid var(--b1);border-radius:5px;padding:.52rem .68rem;cursor:pointer}
+.exit-cb{width:13px;height:13px;flex-shrink:0;margin-top:.18rem;accent-color:var(--red)}
+.exit-txt{font-size:.8rem;color:var(--t2);line-height:1.5}
+
+/* VERSIONS */
+.ver-table{width:100%;border-collapse:collapse;font-size:.8rem;margin-top:.48rem}
+.ver-table th{font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);text-align:left;padding:.42rem .68rem;border-bottom:1px solid var(--b1);background:var(--bg3)}
+.ver-table td{padding:.46rem .68rem;border-bottom:1px solid rgba(26,48,80,.3);color:var(--t2)}
+.ver-mono{font-family:'JetBrains Mono',monospace;font-size:.73rem;color:var(--p3)}
+.ver-output{background:var(--bg3);border:1px solid var(--b1);border-radius:5px;padding:.72rem .88rem;font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--text);line-height:1.7;white-space:pre-wrap;margin-top:.58rem}
+
+.cl{border-radius:6px;padding:.8rem .92rem;font-size:.84rem;line-height:1.72;border-left:3px solid;margin:.48rem 0}
+.cl-lbl{font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:.28rem;font-weight:600}
+.cl-info{background:rgba(59,130,246,.07);border-color:var(--primary);color:var(--p3)}.cl-info .cl-lbl{color:var(--p2)}
+.cl-warn{background:rgba(245,158,11,.07);border-color:var(--accent);color:#fef3c7}.cl-warn .cl-lbl{color:var(--a2)}
+.cl-ok{background:rgba(16,185,129,.07);border-color:var(--green);color:var(--g3)}.cl-ok .cl-lbl{color:var(--g2)}
+
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(4,8,15,.78);z-index:500;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.modal-bg.open{display:flex}
+.modal{background:var(--bg2);border:1px solid var(--b1);border-radius:9px;padding:1.5rem;width:90%;max-width:500px;max-height:88vh;overflow-y:auto}
+.modal-hd{font-family:'Syne',sans-serif;font-size:.98rem;font-weight:800;color:var(--white);margin-bottom:1rem;display:flex;align-items:center;justify-content:space-between}
+.modal-close{background:none;border:none;color:var(--t3);font-size:1.1rem;cursor:pointer}
+.modal-close:hover{color:var(--text)}
+.modal-actions{display:flex;gap:.48rem;margin-top:1rem;justify-content:flex-end}
+
+.toast-wrap{position:fixed;bottom:1.2rem;right:1.2rem;display:flex;flex-direction:column;gap:.38rem;z-index:1000}
+.toast{background:var(--bg3);border:1px solid var(--b1);border-radius:6px;padding:.52rem .92rem;font-family:'Syne',sans-serif;font-size:.76rem;color:var(--text);animation:slide-in .2s ease}
+@keyframes slide-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sb-logo">
+    <span class="sb-mark">Enterprise AI Architect</span>
+    <div class="sb-title">Study Tracker · 2026–2030</div>
+  </div>
+  <div class="sb-prog">
+    <div class="sb-prog-row"><span>Overall</span><span id="prog-pct">0%</span></div>
+    <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+    <div class="sb-prog-row" style="margin-top:.26rem"><span id="prog-done">0</span><span>/ <span id="prog-total">0</span> milestones</span></div>
+  </div>
+  <div class="sb-nav">
+    <div class="nav-sec">Dashboard</div>
+    <button class="nav-btn active" onclick="nav('dashboard',this)"><span class="nav-icon">🏠</span>Dashboard</button>
+    <div class="nav-sec">Curriculum</div>
+    <button class="nav-btn" onclick="nav('levels',this)"><span class="nav-icon">📚</span>Phase Overview</button>
+    <button class="nav-btn" onclick="nav('milestones',this)"><span class="nav-icon">🎯</span>Milestones<span class="nav-badge" id="ms-badge">0/0</span></button>
+    <div class="nav-sec">Work Logs</div>
+    <button class="nav-btn" onclick="nav('notes',this)"><span class="nav-icon">📝</span>Notes</button>
+    <button class="nav-btn" onclick="nav('resources',this)"><span class="nav-icon">🔗</span>Resources</button>
+    <button class="nav-btn" onclick="nav('errorlog',this)"><span class="nav-icon">🐛</span>Error Log</button>
+    <button class="nav-btn" onclick="nav('sessionstate',this)"><span class="nav-icon">💾</span>Session State</button>
+    <button class="nav-btn" onclick="nav('adrlog',this)"><span class="nav-icon">⚖️</span>ADR Log</button>
+    <button class="nav-btn" onclick="nav('decisions',this)"><span class="nav-icon">🗂️</span>Decisions</button>
+    <button class="nav-btn" onclick="nav('wins',this)"><span class="nav-icon">🏆</span>Wins Log</button>
+    <div class="nav-sec">Reviews</div>
+    <button class="nav-btn" onclick="nav('studylog',this)"><span class="nav-icon">📅</span>Full Study Log</button>
+    <button class="nav-btn" onclick="nav('weekly',this)"><span class="nav-icon">🔄</span>Weekly Review</button>
+    <button class="nav-btn" onclick="nav('quarterly',this)"><span class="nav-icon">📊</span>Quarterly Review</button>
+    <div class="nav-sec">Utilities</div>
+    <button class="nav-btn" onclick="nav('versions',this)"><span class="nav-icon">📌</span>Versions File</button>
+    <button class="nav-btn" onclick="exportData()"><span class="nav-icon">⬇️</span>Export Backup</button>
+  </div>
+</div>
+
+<div class="main">
+  <div class="topbar">
+    <div class="tb-title" id="tb-title">Dashboard</div>
+    <span id="tb-date" style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--t3)"></span>
+  </div>
+  <div class="content">
+
+    <!-- DASHBOARD -->
+    <div class="panel active" id="panel-dashboard">
+      <div class="grid4">
+        <div class="stat-card sc-blue"><span class="sn" id="st-hrs">0</span><span class="sl">Hours Studied</span></div>
+        <div class="stat-card sc-gold"><span class="sn" id="st-ses">0</span><span class="sl">Sessions</span></div>
+        <div class="stat-card sc-green"><span class="sn" id="st-ms">0</span><span class="sl">Milestones Done</span></div>
+        <div class="stat-card sc-purple"><span class="sn" id="st-adr">0</span><span class="sl">ADRs Written</span></div>
+      </div>
+
+      <div class="sec-t">Log Today's Session</div>
+      <div class="card"><div class="card-body">
+        <div class="fg">
+          <label class="fl">Energy Mode — Select Before Logging</label>
+          <div class="energy-sel">
+            <button class="energy-btn eb-green sel" id="eb-g" onclick="selE('green',this)">🟢 Green<br><span style="font-weight:400;font-size:.64rem">Full Build</span></button>
+            <button class="energy-btn eb-yellow" id="eb-y" onclick="selE('yellow',this)">🟡 Yellow<br><span style="font-weight:400;font-size:.64rem">Read Only</span></button>
+            <button class="energy-btn eb-red" id="eb-r" onclick="selE('red',this)">🔴 Red<br><span style="font-weight:400;font-size:.64rem">10 Minutes</span></button>
+          </div>
+        </div>
+        <div class="row" style="flex-wrap:wrap;gap:.48rem;margin-bottom:.48rem">
+          <div style="flex:2;min-width:130px" class="fg"><label class="fl">Phase</label><select class="fi" id="ql-lv"></select></div>
+          <div style="width:90px" class="fg"><label class="fl">Hours</label><input type="number" class="fi" id="ql-hr" placeholder="1.5" min="0.1" max="14" step="0.25"></div>
+          <div style="width:128px" class="fg"><label class="fl">Date</label><input type="date" class="fi" id="ql-dt"></div>
+        </div>
+        <div class="fg"><label class="fl">Done Definition</label><input class="fi" id="ql-done" placeholder="Done = I committed the benchmark report Section 2"></div>
+        <div class="fg"><label class="fl">What did you build or study?</label><textarea class="fi" id="ql-what" rows="2" placeholder="Be specific — artifact, function, concept..."></textarea></div>
+        <div class="fg"><label class="fl">Daily Question (confusion from last session)</label><input class="fi" id="ql-dq" placeholder="e.g. Why does PagedAttention reduce fragmentation?"></div>
+        <div class="row" style="flex-wrap:wrap;gap:.48rem">
+          <div style="flex:1;min-width:155px" class="fg"><label class="fl">Next session focus</label><input class="fi" id="ql-nx" placeholder="e.g. Start Phase 1 benchmarking"></div>
+          <div style="padding-top:1.28rem"><button class="btn btn-accent" onclick="addLog()">+ Log Session</button></div>
+        </div>
+        <div class="meta-tally">
+          <div class="mt-title">Meta-Work Tally — 84 min/week budget <span class="mt-budget mt-ok" id="mt-display">0/84 min</span></div>
+          <div class="mt-grid">
+            <div class="mt-row"><span class="mt-label">Error log</span><input type="number" id="mt-err" min="0" value="0" onchange="updateMT()"> min</div>
+            <div class="mt-row"><span class="mt-label">Daily questions</span><input type="number" id="mt-dq" min="0" value="0" onchange="updateMT()"> min</div>
+            <div class="mt-row"><span class="mt-label">Teach-back</span><input type="number" id="mt-tb" min="0" value="0" onchange="updateMT()"> min</div>
+            <div class="mt-row"><span class="mt-label">ADR writing</span><input type="number" id="mt-adr" min="0" value="0" onchange="updateMT()"> min</div>
+            <div class="mt-row"><span class="mt-label">Code archaeology</span><input type="number" id="mt-ca" min="0" value="0" onchange="updateMT()"> min</div>
+            <div class="mt-row"><span class="mt-label">Community post</span><input type="number" id="mt-cp" min="0" value="0" onchange="updateMT()"> min</div>
+            <div class="mt-row"><span class="mt-label">Spaced repetition</span><input type="number" id="mt-sr" min="0" value="0" onchange="updateMT()"> min</div>
+          </div>
+          <div class="mt-total-row"><span>Total</span><span id="mt-val" class="mt-ok">0 min / 84 min ✓</span></div>
+        </div>
+      </div></div>
+      <div class="sec-t">Recent Sessions</div>
+      <div id="recent-log"></div>
+    </div>
+
+    <!-- LEVELS -->
+    <div class="panel" id="panel-levels"><div class="grid3" id="levels-grid"></div></div>
+
+    <!-- MILESTONES -->
+    <div class="panel" id="panel-milestones"><div id="ms-list"></div></div>
+
+    <!-- NOTES -->
+    <div class="panel" id="panel-notes">
+      <div class="notes-layout">
+        <div class="notes-list">
+          <div class="nl-hd"><span class="nl-title">Notes</span><button class="btn btn-primary btn-sm" onclick="newNote()">+ New</button></div>
+          <div id="nl-items" class="nl-items"></div>
+        </div>
+        <div class="note-editor" id="note-editor">
+          <div class="ne-empty" id="ne-empty"><span style="font-size:1.8rem">📝</span><span>Select or create a note</span></div>
+          <div id="ne-inner" style="display:none;flex-direction:column;height:100%">
+            <div class="ne-hd">
+              <input class="ne-title-input" id="ne-title" placeholder="Note title..." oninput="saveNote()">
+              <select class="fi" id="ne-lv" onchange="saveNote()" style="width:auto;font-size:.68rem;padding:.17em .4em"></select>
+              <button class="btn btn-danger btn-sm" onclick="delNote()">Delete</button>
+            </div>
+            <textarea class="ne-body" id="ne-body" placeholder="Write your notes here..." oninput="saveNote()"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESOURCES -->
+    <div class="panel" id="panel-resources">
+      <div style="display:flex;align-items:center;gap:.48rem;margin-bottom:.68rem;flex-wrap:wrap">
+        <button class="btn btn-ghost btn-sm" onclick="filterRes('all',this)">All</button>
+        <button class="btn btn-ghost btn-sm" onclick="filterRes('video',this)">📹 Videos</button>
+        <button class="btn btn-ghost btn-sm" onclick="filterRes('link',this)">🔗 Links</button>
+        <button class="btn btn-ghost btn-sm" onclick="filterRes('doc',this)">📄 Docs</button>
+        <div style="flex:1"></div>
+        <button class="btn btn-primary" onclick="toggleAddRes()">+ Add Resource</button>
+      </div>
+      <div class="add-form" id="add-res-form">
+        <div class="row" style="flex-wrap:wrap;margin-bottom:.48rem;gap:.48rem">
+          <div class="fg" style="flex:1;min-width:108px"><label class="fl">Type</label><select class="fi" id="rf-type"><option value="video">Video</option><option value="link">Link</option><option value="doc">Document</option></select></div>
+          <div class="fg" style="flex:1;min-width:108px"><label class="fl">Phase</label><select class="fi" id="rf-lv"></select></div>
+        </div>
+        <div class="fg"><label class="fl">Title</label><input class="fi" id="rf-title" placeholder="Resource title"></div>
+        <div class="fg"><label class="fl">URL</label><input class="fi" id="rf-url" placeholder="https://..."></div>
+        <div class="fg"><label class="fl">Notes</label><textarea class="fi" id="rf-desc" rows="2" placeholder="Why useful?"></textarea></div>
+        <div id="res-sug"></div>
+        <div style="display:flex;gap:.38rem"><button class="btn btn-accent" onclick="addRes()">Save</button><button class="btn btn-ghost" onclick="toggleAddRes()">Cancel</button></div>
+      </div>
+      <div class="res-grid" id="res-grid"></div>
+    </div>
+
+    <!-- ERROR LOG -->
+    <div class="panel" id="panel-errorlog">
+      <div class="cl cl-info"><div class="cl-lbl">Getting Unstuck Protocol</div>Read error bottom-to-top · Name problem in one sentence · Search: tool + exact error + OS · Try one fix at a time · After 45 min ask for help · After solving: log here same day</div>
+      <div style="margin:.65rem 0"><button class="btn btn-primary" onclick="openM('modal-err')">+ Log an Error</button></div>
+      <div id="err-list"></div>
+    </div>
+
+    <!-- SESSION STATE -->
+    <div class="panel" id="panel-sessionstate">
+      <div class="cl cl-info"><div class="cl-lbl">session-state.md — Start at Phase 1 Output 2</div>Three lines at end of every session: working on / next step / confused by. Also commit this to your repository as session-state.md.</div>
+      <div style="margin:.65rem 0"><button class="btn btn-primary" onclick="openM('modal-ss')">+ Add Session State</button></div>
+      <div id="ss-list"></div>
+    </div>
+
+    <!-- ADR LOG -->
+    <div class="panel" id="panel-adrlog">
+      <div class="cl cl-info"><div class="cl-lbl">Architectural Decision Records — Primary Portfolio Evidence</div>Every significant technical choice. Format: Context / Decision / Alternatives / Consequences / Status. This collection is your proof of architectural reasoning. ADR-001 = environment decision on Day 1.</div>
+      <div style="margin:.65rem 0"><button class="btn btn-primary" onclick="openM('modal-adr')">+ New ADR</button></div>
+      <div id="adr-list"></div>
+    </div>
+
+    <!-- DECISIONS -->
+    <div class="panel" id="panel-decisions">
+      <div class="cl cl-warn"><div class="cl-lbl">Decisions — 30-Minute Timebox</div>Timebox 30–60 min to decide, write here, move on. Default: choose the option that keeps you building with least friction.</div>
+      <div style="margin:.65rem 0"><button class="btn btn-primary" onclick="openM('modal-dec')">+ Log a Decision</button></div>
+      <div id="dec-list"></div>
+    </div>
+
+    <!-- WINS -->
+    <div class="panel" id="panel-wins">
+      <div class="row" style="margin-bottom:.78rem;gap:.48rem">
+        <input class="fi" id="win-txt" placeholder="What worked? What did you figure out?" style="flex:1">
+        <button class="btn btn-accent" onclick="addWin()">+ Win 🏆</button>
+      </div>
+      <div id="wins-list"></div>
+    </div>
+
+    <!-- FULL STUDY LOG -->
+    <div class="panel" id="panel-studylog">
+      <div style="overflow-x:auto">
+      <table class="log-table">
+        <thead><tr><th>Date</th><th>Phase</th><th>Mode</th><th>Hrs</th><th>Built / Studied</th><th>Next</th><th></th></tr></thead>
+        <tbody id="full-log"></tbody>
+      </table>
+      </div>
+    </div>
+
+    <!-- WEEKLY REVIEW -->
+    <div class="panel" id="panel-weekly">
+      <div class="cl cl-warn"><div class="cl-lbl">Sunday Planning — Non-Negotiable</div>Write exactly 3 tasks: verb + specific output. If you cannot write 3 specific tasks you have not understood what you are building. From Phase 2: post one sentence to a technical community.</div>
+      <div class="card" style="margin-top:.78rem"><div class="card-body">
+        <div class="fg"><label class="fl">Week of</label><input type="date" class="fi" id="wr-dt"></div>
+        <div class="rev-q"><div class="rev-q-lbl">What did you build this week?</div><textarea class="fi" id="wr-built" rows="2" placeholder="Artifact, function, config — be specific"></textarea></div>
+        <div class="rev-q"><div class="rev-q-lbl">3 Tasks for next week (verb + specific output)</div><textarea class="fi" id="wr-tasks" rows="3" placeholder="1. Commit benchmark report Section 2&#10;2. Write ADR-006 for LangGraph selection&#10;3. Deploy vLLM container with health check"></textarea></div>
+        <div class="rev-q"><div class="rev-q-lbl">Community post this week? (Phase 2+)</div><input class="fi" id="wr-post" placeholder="Built · Blocked by · Next"></div>
+        <div class="rev-q"><div class="rev-q-lbl">Meta-work within 84-min budget?</div><select class="fi" id="wr-meta"><option value="">Select</option><option>Yes — within budget</option><option>No — over budget, dropped a mechanism</option><option>Not applicable this week</option></select></div>
+        <button class="btn btn-accent" onclick="saveWeekly()">Save Weekly Review</button>
+      </div></div>
+      <div class="sec-t" style="margin-top:1.1rem">Past Reviews</div>
+      <div id="past-weekly"></div>
+    </div>
+
+    <!-- QUARTERLY REVIEW -->
+    <div class="panel" id="panel-quarterly">
+      <div class="cl cl-ok"><div class="cl-lbl">Quarterly Review — Every 3 Months · 30 Min · Calendar Appointment</div>Schedule all 14 quarterly review appointments now for the full 42-month duration. Question 4 is the most important — exit criteria prevents both drift and sunk-cost continuation.</div>
+      <div class="card" style="margin-top:.78rem"><div class="card-body">
+        <div class="fg"><label class="fl">Quarter</label><input class="fi" id="qr-q" placeholder="Q1 2027 — Months 1–3"></div>
+        <div class="rev-q"><div class="rev-q-lbl">Q1 — Interest in enterprise AI architecture, 1–10</div><input type="number" class="fi" id="qr-int" min="1" max="10" placeholder="7"></div>
+        <div class="rev-q"><div class="rev-q-lbl">Q2 — What changed in your life since last quarter?</div><textarea class="fi" id="qr-life" rows="2" placeholder="Work, health, motivation, relocation..."></textarea></div>
+        <div class="rev-q"><div class="rev-q-lbl">Q3 — On track? Adjust timeline or goal?</div><textarea class="fi" id="qr-track" rows="2" placeholder="Milestone completion rate, any adjustments needed..."></textarea></div>
+        <div class="rev-q">
+          <div class="rev-q-lbl">Q4 — Exit Criteria (all four must be true simultaneously to legitimately quit)</div>
+          <div class="rev-q-hint">Persistence into the wrong goal is not virtue. Check each criterion honestly.</div>
+          <div class="exit-grid">
+            <div class="exit-item"><input type="checkbox" class="exit-cb" id="ec1"><label class="exit-txt" for="ec1">Interest below 4 for three consecutive quarters</label></div>
+            <div class="exit-item"><input type="checkbox" class="exit-cb" id="ec2"><label class="exit-txt" for="ec2">Concrete alternative path identified</label></div>
+            <div class="exit-item"><input type="checkbox" class="exit-cb" id="ec3"><label class="exit-txt" for="ec3">All learning documented and repurposable</label></div>
+            <div class="exit-item"><input type="checkbox" class="exit-cb" id="ec4"><label class="exit-txt" for="ec4">Discussion with a trusted person completed</label></div>
+          </div>
+        </div>
+        <button class="btn btn-accent" onclick="saveQuarterly()">Save Quarterly Review</button>
+      </div></div>
+      <div class="sec-t" style="margin-top:1.1rem">Past Quarterly Reviews</div>
+      <div id="past-quarterly"></div>
+    </div>
+
+    <!-- VERSIONS -->
+    <div class="panel" id="panel-versions">
+      <div class="cl cl-info"><div class="cl-lbl">versions.md — Day 1 · Update at Phase Start · Tech Pulse at Months 9, 18, 27, 36</div>Record exact versions of every tool. When something breaks in Month 18 this file tells you what changed.</div>
+      <div style="margin:.65rem 0"><button class="btn btn-primary" onclick="openM('modal-ver')">+ Add Entry</button></div>
+      <table class="ver-table">
+        <thead><tr><th>Phase</th><th>Tool</th><th>Version</th><th>Date</th><th></th></tr></thead>
+        <tbody id="ver-list"></tbody>
+      </table>
+      <div class="sec-t" style="margin-top:.9rem">Generated versions.md</div>
+      <div class="ver-output" id="ver-output">No entries yet.</div>
+      <button class="btn btn-ghost btn-sm" style="margin-top:.42rem" onclick="copyVersions()">Copy versions.md</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- MODALS -->
+<div class="modal-bg" id="modal-err">
+  <div class="modal">
+    <div class="modal-hd">Log an Error <button class="modal-close" onclick="closeM('modal-err')">✕</button></div>
+    <div class="fg"><label class="fl">Phase</label><select class="fi" id="ef-lv"></select></div>
+    <div class="fg"><label class="fl">Error Message (copy from terminal)</label><textarea class="fi" id="ef-err" rows="2" placeholder="Exact error text"></textarea></div>
+    <div class="fg"><label class="fl">What I tried (in order)</label><textarea class="fi" id="ef-tried" rows="2" placeholder="Step 1: ... Step 2: ..."></textarea></div>
+    <div class="fg"><label class="fl">What fixed it</label><textarea class="fi" id="ef-fix" rows="2" placeholder="Exact command or change"></textarea></div>
+    <div class="fg"><label class="fl">Why it happened (one sentence)</label><input class="fi" id="ef-why" placeholder="Root cause..."></div>
+    <div class="modal-actions"><button class="btn btn-ghost" onclick="closeM('modal-err')">Cancel</button><button class="btn btn-accent" onclick="addError()">Save</button></div>
+  </div>
+</div>
+
+<div class="modal-bg" id="modal-ss">
+  <div class="modal">
+    <div class="modal-hd">Session State <button class="modal-close" onclick="closeM('modal-ss')">✕</button></div>
+    <div class="fg"><label class="fl">Phase</label><select class="fi" id="sf-lv"></select></div>
+    <div class="fg"><label class="fl">Working on</label><input class="fi" id="sf-on" placeholder="Artifact / module / task..."></div>
+    <div class="fg"><label class="fl">Next step (specific enough to start without thinking)</label><input class="fi" id="sf-nx" placeholder="Exact next action..."></div>
+    <div class="fg"><label class="fl">Confused by</label><input class="fi" id="sf-conf" placeholder="One genuine uncertainty..."></div>
+    <div class="modal-actions"><button class="btn btn-ghost" onclick="closeM('modal-ss')">Cancel</button><button class="btn btn-primary" onclick="addSS()">Save</button></div>
+  </div>
+</div>
+
+<div class="modal-bg" id="modal-adr">
+  <div class="modal">
+    <div class="modal-hd">New ADR <button class="modal-close" onclick="closeM('modal-adr')">✕</button></div>
+    <div class="row" style="gap:.48rem">
+      <div class="fg" style="width:110px"><label class="fl">Number</label><input class="fi" id="af-num" placeholder="ADR-001"></div>
+      <div class="fg" style="flex:1"><label class="fl">Phase</label><select class="fi" id="af-lv"></select></div>
+    </div>
+    <div class="fg"><label class="fl">Title</label><input class="fi" id="af-title" placeholder="Use GitHub Codespaces as primary environment"></div>
+    <div class="fg"><label class="fl">Context</label><textarea class="fi" id="af-ctx" rows="2" placeholder="Why a decision was needed..."></textarea></div>
+    <div class="fg"><label class="fl">Decision</label><textarea class="fi" id="af-dec" rows="2" placeholder="What you decided..."></textarea></div>
+    <div class="fg"><label class="fl">Alternatives Considered</label><textarea class="fi" id="af-alt" rows="2" placeholder="Other options evaluated..."></textarea></div>
+    <div class="fg"><label class="fl">Consequences</label><textarea class="fi" id="af-cons" rows="2" placeholder="What this enables or constrains..."></textarea></div>
+    <div class="fg"><label class="fl">Status</label><select class="fi" id="af-status"><option>Closed</option><option>Open — revisit with new information</option></select></div>
+    <div class="modal-actions"><button class="btn btn-ghost" onclick="closeM('modal-adr')">Cancel</button><button class="btn btn-purple" onclick="addADR()">Save ADR</button></div>
+  </div>
+</div>
+
+<div class="modal-bg" id="modal-dec">
+  <div class="modal">
+    <div class="modal-hd">Log a Decision <button class="modal-close" onclick="closeM('modal-dec')">✕</button></div>
+    <div class="fg"><label class="fl">Phase</label><select class="fi" id="df-lv"></select></div>
+    <div class="fg"><label class="fl">Decision</label><input class="fi" id="df-dec" placeholder="What you decided..."></div>
+    <div class="fg"><label class="fl">Reasoning</label><textarea class="fi" id="df-reason" rows="2" placeholder="Why this option..."></textarea></div>
+    <div class="fg"><label class="fl">Status</label><select class="fi" id="df-status"><option>Closed</option><option>Open — monitoring</option></select></div>
+    <div class="modal-actions"><button class="btn btn-ghost" onclick="closeM('modal-dec')">Cancel</button><button class="btn btn-accent" onclick="addDec()">Save</button></div>
+  </div>
+</div>
+
+<div class="modal-bg" id="modal-ver">
+  <div class="modal">
+    <div class="modal-hd">Add Version Entry <button class="modal-close" onclick="closeM('modal-ver')">✕</button></div>
+    <div class="fg"><label class="fl">Phase</label><select class="fi" id="vf-lv"></select></div>
+    <div class="fg"><label class="fl">Tool</label><input class="fi" id="vf-tool" placeholder="Python, vLLM, Docker..."></div>
+    <div class="fg"><label class="fl">Version</label><input class="fi" id="vf-ver" placeholder="3.11.4"></div>
+    <div class="modal-actions"><button class="btn btn-ghost" onclick="closeM('modal-ver')">Cancel</button><button class="btn btn-primary" onclick="addVer()">Save</button></div>
+  </div>
+</div>
+
+<div class="toast-wrap" id="toast-wrap"></div>
+
+<script>
+const LEVELS=[
+  {id:'l0',num:'Phase 0',name:'Foundations',dur:'6 mo',hrs:'~210h',col:'#3b82f6',pitch:'Environment, Python, Linux, GPU physics, operational math. Gate: CI-passing artifacts, 30+ WPM.'},
+  {id:'l1',num:'Phase 1',name:'Inference Systems',dur:'7 mo',hrs:'~245h',col:'#10b981',pitch:'vLLM, PagedAttention, KV cache, quantization, VRAM budgeting, benchmark reports.'},
+  {id:'l2',num:'Phase 2',name:'AI Engineering',dur:'8 mo',hrs:'~280h',col:'#f59e0b',pitch:'LangGraph multi-agent, vector RAG, tool permissions, state checkpointing.'},
+  {id:'l3',num:'Phase 3',name:'Enterprise AI',dur:'8 mo',hrs:'~280h',col:'#06b6d4',pitch:'GraphRAG, DeepEval evaluation, OpenTelemetry, SLOs, production hardening.'},
+  {id:'l4',num:'Phase 4',name:'Governance & HITL',dur:'7 mo',hrs:'~245h',col:'#8b5cf6',pitch:'Async HITL, risk tiers, AIBOM, NIST AI RMF, ISO 42001, compliance mapping.'},
+  {id:'l5',num:'Phase 5',name:'Advanced Infrastructure',dur:'6 mo',hrs:'~210h',col:'#f97316',pitch:'Kubernetes, Helm, Triton conceptual, CKA, capstone, 4-week interview prep.'},
+];
+const RES={
+  l0:[{name:'TypingClub',url:'https://www.typingclub.com',type:'link'},{name:'Keybr — Adaptive Warmup',url:'https://www.keybr.com',type:'link'},{name:'GitHub Codespaces Docs',url:'https://docs.github.com/en/codespaces',type:'link'},{name:'Automate the Boring Stuff',url:'https://automatetheboringstuff.com',type:'link'},{name:'Codewars — Python Practice',url:'https://www.codewars.com',type:'link'}],
+  l1:[{name:'vLLM PagedAttention Blog (read FIRST)',url:'https://blog.vllm.ai/2023/06/20/vllm.html',type:'link'},{name:'vLLM Documentation',url:'https://docs.vllm.ai',type:'link'},{name:'hey — HTTP Load Generator',url:'https://github.com/rakyll/hey',type:'link'},{name:'3Blue1Brown — Attention Mechanism',url:'https://www.youtube.com/watch?v=eMlx5fFNoYc',type:'video'}],
+  l2:[{name:'LangGraph Documentation',url:'https://langchain-ai.github.io/langgraph/',type:'link'},{name:'ChromaDB Documentation',url:'https://docs.trychroma.com',type:'link'},{name:'sentence-transformers',url:'https://www.sbert.net',type:'link'},{name:'FAISS',url:'https://faiss.ai',type:'link'}],
+  l3:[{name:'Microsoft GraphRAG',url:'https://github.com/microsoft/graphrag',type:'link'},{name:'DeepEval',url:'https://docs.confident-ai.com',type:'link'},{name:'OpenTelemetry GenAI Conventions',url:'https://opentelemetry.io/docs/specs/semconv/gen-ai/',type:'link'},{name:'Jaeger Tracing',url:'https://www.jaegertracing.io',type:'link'},{name:'Prometheus Getting Started',url:'https://prometheus.io/docs/getting_started/',type:'link'}],
+  l4:[{name:'NIST AI RMF',url:'https://airc.nist.gov/Home',type:'link'},{name:'ISO 42001 Overview',url:'https://www.bsigroup.com/en-GB/topics/artificial-intelligence/iso-42001/',type:'link'},{name:'LangGraph HITL Patterns',url:'https://langchain-ai.github.io/langgraph/concepts/human_in_the_loop/',type:'link'}],
+  l5:[{name:'TechWorld Nana — Kubernetes (4h)',url:'https://www.youtube.com/watch?v=X48VuDVv0do',type:'video'},{name:'Killercoda — K8s Playground',url:'https://killercoda.com',type:'link'},{name:'CKA Certification',url:'https://training.linuxfoundation.org/certification/certified-kubernetes-administrator-cka/',type:'link'},{name:'Helm Docs',url:'https://helm.sh/docs/',type:'link'},{name:'Triton Language',url:'https://triton-lang.org',type:'link'},{name:'NVIDIA DLI Courses',url:'https://www.nvidia.com/en-us/training/',type:'link'}],
+};
+function defaultMS(){return[
+  {id:'l0a',lv:'Phase 0',txt:'30+ WPM verified at typingtest.com and recorded in typing-progress.md',done:false,dt:null},
+  {id:'l0b',lv:'Phase 0',txt:'GitHub Codespaces: Python 3.11+ and Git verified in terminal',done:false,dt:null},
+  {id:'l0c',lv:'Phase 0',txt:'Repository enterprise-ai-architect: public, GitHub Pages enabled',done:false,dt:null},
+  {id:'l0d',lv:'Phase 0',txt:'System files committed: versions.md, session-state.md, decisions.md, error-log.md, adr-log.md',done:false,dt:null},
+  {id:'l0e',lv:'Phase 0',txt:'ADR-001 written: environment decision (Codespaces vs alternatives)',done:false,dt:null},
+  {id:'l0f',lv:'Phase 0',txt:'Artifact P0-A1: Domain Log Analyser — test file, CI green, ADR-002',done:false,dt:null},
+  {id:'l0g',lv:'Phase 0',txt:'Artifact P0-A2: Latency Statistics Calculator with GPU cost model',done:false,dt:null},
+  {id:'l0h',lv:'Phase 0',txt:'Artifact P0-A3: REST API Client with structured output',done:false,dt:null},
+  {id:'l0i',lv:'Phase 0',txt:'All 14 quarterly review appointments in calendar for 42 months',done:false,dt:null},
+  {id:'l0j',lv:'Phase 0',txt:'VRAM arithmetic: can calculate model memory requirements mentally',done:false,dt:null},
+  {id:'l1a',lv:'Phase 1',txt:'PagedAttention blog post read — notes taken before any vLLM code',done:false,dt:null},
+  {id:'l1b',lv:'Phase 1',txt:'session-state.md habit established at Phase 1 Output 2',done:false,dt:null},
+  {id:'l1c',lv:'Phase 1',txt:'CS Lite: 20 focused problems completed on Codewars',done:false,dt:null},
+  {id:'l1d',lv:'Phase 1',txt:'Local systems bridge: env vars, logging, argparse, pytest, Makefile all used',done:false,dt:null},
+  {id:'l1e',lv:'Phase 1',txt:'Artifact P1-A1: Benchmark Report — 5 sections, p50/p95/p99 at 6 concurrency levels',done:false,dt:null},
+  {id:'l1f',lv:'Phase 1',txt:'ADR-004: quantization decision (FP16 vs INT4)',done:false,dt:null},
+  {id:'l1g',lv:'Phase 1',txt:'Artifact P1-A2: vLLM in Docker with NGINX, health check, configuration document',done:false,dt:null},
+  {id:'l1h',lv:'Phase 1',txt:'GitHub Actions CI: green checkmarks on every push',done:false,dt:null},
+  {id:'l1i',lv:'Phase 1',txt:'Can explain PagedAttention and continuous batching without notes',done:false,dt:null},
+  {id:'l2a',lv:'Phase 2',txt:'ADR-006: framework selection (LangGraph vs alternatives)',done:false,dt:null},
+  {id:'l2b',lv:'Phase 2',txt:'ADR-007: tool permission architecture',done:false,dt:null},
+  {id:'l2c',lv:'Phase 2',txt:'ADR-008: vector database selection',done:false,dt:null},
+  {id:'l2d',lv:'Phase 2',txt:'Artifact P2-A1: Multi-agent system using self-hosted vLLM endpoint',done:false,dt:null},
+  {id:'l2e',lv:'Phase 2',txt:'State checkpointing: agent resumes from checkpoint after interruption',done:false,dt:null},
+  {id:'l2f',lv:'Phase 2',txt:'Tool permission scopes defined per agent',done:false,dt:null},
+  {id:'l2g',lv:'Phase 2',txt:'Artifact P2-A2: Vector RAG — Precision@5 and MRR on held-out evaluation set',done:false,dt:null},
+  {id:'l2h',lv:'Phase 2',txt:'Open-source PR submitted to a real project',done:false,dt:null},
+  {id:'l3a',lv:'Phase 3',txt:'ADR-009: graph database selection',done:false,dt:null},
+  {id:'l3b',lv:'Phase 3',txt:'ADR-010: evaluation framework selection',done:false,dt:null},
+  {id:'l3c',lv:'Phase 3',txt:'GraphRAG ingestion over 200+ pages of domain documents',done:false,dt:null},
+  {id:'l3d',lv:'Phase 3',txt:'DeepEval evaluation pipeline in GitHub Actions CI — blocking regressions',done:false,dt:null},
+  {id:'l3e',lv:'Phase 3',txt:'OpenTelemetry tracing across full request path — visible in Jaeger',done:false,dt:null},
+  {id:'l3f',lv:'Phase 3',txt:'Prometheus + Grafana: token throughput, latency percentiles, evaluation metrics',done:false,dt:null},
+  {id:'l3g',lv:'Phase 3',txt:'SLO Document: three SLOs defined with error budgets',done:false,dt:null},
+  {id:'l3h',lv:'Phase 3',txt:'First postmortem written from a real system failure during Phase 3',done:false,dt:null},
+  {id:'l4a',lv:'Phase 4',txt:'ADR-011: HITL architecture decision',done:false,dt:null},
+  {id:'l4b',lv:'Phase 4',txt:'ADR-012: AIBOM toolchain selection',done:false,dt:null},
+  {id:'l4c',lv:'Phase 4',txt:'Async HITL: agent resumes from serialised state on approval',done:false,dt:null},
+  {id:'l4d',lv:'Phase 4',txt:'Three-tier risk scoring routing actions to correct review level',done:false,dt:null},
+  {id:'l4e',lv:'Phase 4',txt:'Rollback mechanism functional for Tier 3 actions',done:false,dt:null},
+  {id:'l4f',lv:'Phase 4',txt:'AIBOM auto-generated and committed with release',done:false,dt:null},
+  {id:'l4g',lv:'Phase 4',txt:'NIST AI RMF mapping complete for full system',done:false,dt:null},
+  {id:'l4h',lv:'Phase 4',txt:'ISO 42001 gap analysis document complete',done:false,dt:null},
+  {id:'l4i',lv:'Phase 4',txt:'Governance Policy Document written for risk committee review',done:false,dt:null},
+  {id:'l4j',lv:'Phase 4',txt:'Google Associate Cloud Engineer certification obtained',done:false,dt:null},
+  {id:'l5a',lv:'Phase 5',txt:'8 weeks on Killercoda before first real Kubernetes cluster',done:false,dt:null},
+  {id:'l5b',lv:'Phase 5',txt:'Helm chart: helm install works for test and production configs',done:false,dt:null},
+  {id:'l5c',lv:'Phase 5',txt:'Network path diagram: user → LB → Ingress → vLLM pod with TLS',done:false,dt:null},
+  {id:'l5d',lv:'Phase 5',txt:'Security hardening: IAM, K8s Secrets, NetworkPolicy, HTTPS, Trivy — all done',done:false,dt:null},
+  {id:'l5e',lv:'Phase 5',txt:'Go HTTP server: /health endpoint returning JSON committed',done:false,dt:null},
+  {id:'l5f',lv:'Phase 5',txt:'CKA Step 1: tasks with notes open in under 90 min',done:false,dt:null},
+  {id:'l5g',lv:'Phase 5',txt:'CKA Step 2: tasks WITHOUT notes in under 90 min',done:false,dt:null},
+  {id:'l5h',lv:'Phase 5',txt:'CKA accountability mechanism in place before registration',done:false,dt:null},
+  {id:'l5i',lv:'Phase 5',txt:'CKA certification exam passed',done:false,dt:null},
+  {id:'l5j',lv:'Phase 5',txt:'Brownfield rescue exercise: diagnosis from symptoms, postmortem written',done:false,dt:null},
+  {id:'l5k',lv:'Phase 5',txt:'Architecture defense document: 4 questions answered — memorise your own answers',done:false,dt:null},
+  {id:'l5l',lv:'Phase 5',txt:'Operations runbook: commands for OOM failure and traffic spike',done:false,dt:null},
+  {id:'l5m',lv:'Phase 5',txt:'Cost analysis: self-hosted vs managed API, 3-year TCO',done:false,dt:null},
+  {id:'l5n',lv:'Phase 5',txt:'4-week interview prep: mock screen recorded and critiqued',done:false,dt:null},
+  {id:'l5o',lv:'Phase 5',txt:'First application to a target enterprise AI role submitted',done:false,dt:null},
+];}
+
+const KEY='eaia_v1';
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||fresh()}catch{return fresh()}}
+function save(){localStorage.setItem(KEY,JSON.stringify(DB))}
+function fresh(){return{log:[],notes:[],resources:[],errors:[],wins:[],weekly:[],quarterly:[],milestones:defaultMS(),levelStatus:{},sessionStates:[],decisions:[],adrs:[],versions:[]}}
+let DB=load();
+
+function populateSels(){
+  const ids=['ql-lv','rf-lv','ef-lv','ne-lv','sf-lv','df-lv','vf-lv','af-lv'];
+  const opts='<option value="">General</option>'+LEVELS.map(l=>`<option>${l.num}</option>`).join('');
+  ids.forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=opts;});
+}
+
+let curE='green';
+function selE(e,btn){curE=e;document.querySelectorAll('.energy-btn').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');const h=document.getElementById('ql-hr');if(e==='red'){h.value=0.17;h.placeholder='10 min';}else{h.value='';h.placeholder='1.5';}}
+
+const TITLES={dashboard:'Dashboard',levels:'Phase Overview',milestones:'Milestones',notes:'Notes',resources:'Resources',errorlog:'Error Log',sessionstate:'Session State',adrlog:'ADR Log',decisions:'Decisions',wins:'Wins Log',studylog:'Full Study Log',weekly:'Weekly Review',quarterly:'Quarterly Review',versions:'Versions File'};
+function nav(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  btn.classList.add('active');
+  document.getElementById('tb-title').textContent=TITLES[id]||id;
+  ({levels:renderLevels,milestones:renderMS,notes:renderNotes,errorlog:renderErrors,sessionstate:renderSS,adrlog:renderADRs,decisions:renderDecs,wins:renderWins,studylog:renderFullLog,weekly:renderWeekly,quarterly:renderQuarterly,versions:renderVersions}[id]||function(){})();
+}
+
+function renderDashboard(){
+  const hrs=DB.log.reduce((s,e)=>s+e.hrs,0);
+  document.getElementById('st-hrs').textContent=hrs.toFixed(1);
+  document.getElementById('st-ses').textContent=DB.log.length;
+  const done=DB.milestones.filter(m=>m.done).length;
+  document.getElementById('st-ms').textContent=done;
+  document.getElementById('st-adr').textContent=DB.adrs.length;
+  document.getElementById('prog-done').textContent=done;
+  document.getElementById('prog-total').textContent=DB.milestones.length;
+  const pct=Math.round((done/DB.milestones.length)*100)||0;
+  document.getElementById('prog-fill').style.width=pct+'%';
+  document.getElementById('prog-pct').textContent=pct+'%';
+  document.getElementById('ms-badge').textContent=done+'/'+DB.milestones.length;
+  const rl=document.getElementById('recent-log');
+  const recent=DB.log.slice(-5).reverse();
+  if(!recent.length){rl.innerHTML='<div style="color:var(--t3);font-size:.86rem;font-style:italic">No sessions logged yet.</div>';return;}
+  rl.innerHTML=recent.map(e=>{
+    const icon={'green':'🟢','yellow':'🟡','red':'🔴'}[e.energy]||'';
+    return`<div class="log-entry"><div class="le-header"><span class="le-date">${e.dt}</span><span class="le-tag">${esc(e.lv||'General')}</span><span class="le-hrs">${e.hrs}h</span><span style="font-size:.85rem">${icon}</span><button class="btn btn-danger" style="margin-left:auto" onclick="delLog('${e.id}')">✕</button></div>${e.doneDef?`<div class="le-done">Done: ${esc(e.doneDef)}</div>`:''}<div class="le-what">${esc(e.what)}</div>${e.dq?`<div class="le-dq">❓ ${esc(e.dq)}</div>`:''}</div>`;
+  }).join('');
+}
+
+function addLog(){
+  const lv=document.getElementById('ql-lv').value,hrs=parseFloat(document.getElementById('ql-hr').value),dt=document.getElementById('ql-dt').value||today(),doneDef=document.getElementById('ql-done').value.trim(),what=document.getElementById('ql-what').value.trim(),dq=document.getElementById('ql-dq').value.trim(),nx=document.getElementById('ql-nx').value.trim();
+  if(!what||!hrs){toast('Fill in hours and what you built');return;}
+  DB.log.push({id:uid(),dt,lv:lv||'General',hrs,what,dq,nx,doneDef,energy:curE,ts:Date.now()});
+  save();['ql-hr','ql-done','ql-what','ql-dq','ql-nx'].forEach(id=>document.getElementById(id).value='');
+  renderDashboard();toast('Session logged ✓');
+}
+function delLog(id){DB.log=DB.log.filter(e=>e.id!==id);save();renderDashboard();}
+
+function updateMT(){
+  const ids=['mt-err','mt-dq','mt-tb','mt-adr','mt-ca','mt-cp','mt-sr'];
+  const t=ids.reduce((s,id)=>s+parseInt(document.getElementById(id).value||0),0);
+  const ok=t<=84;
+  document.getElementById('mt-display').textContent=t+'/84 min';
+  document.getElementById('mt-display').className='mt-budget '+(ok?'mt-ok':'mt-over');
+  document.getElementById('mt-val').textContent=t+' min / 84 min '+(ok?'✓':'⚠ OVER — drop a mechanism');
+  document.getElementById('mt-val').className=ok?'mt-ok':'mt-over';
+}
+
+function renderLevels(){
+  const g=document.getElementById('levels-grid');
+  g.innerHTML=LEVELS.map(l=>{
+    const ms=DB.milestones.filter(m=>m.lv===l.num);
+    const done=ms.filter(m=>m.done).length;
+    const pct=ms.length?Math.round((done/ms.length)*100):0;
+    const st=DB.levelStatus[l.id]||'not-started';
+    return`<div class="level-card" style="--lc-color:${l.col}"><div class="lc-phase">${l.num}</div><div class="lc-name">${l.name}</div><div class="lc-meta">${l.dur} · ${l.hrs}</div><div class="lc-pitch">${l.pitch}</div><div class="lc-prog"><div class="lc-prog-fill" style="width:${pct}%;background:${l.col}"></div></div><div class="lc-status-row"><span>${done}/${ms.length} milestones</span><select onchange="setLS('${l.id}',this.value)" style="background:var(--bg4);border:1px solid var(--b1);border-radius:3px;color:var(--t2);font-family:'JetBrains Mono',monospace;font-size:.58rem;padding:.17em .38em"><option value="not-started" ${st==='not-started'?'selected':''}>Not Started</option><option value="in-progress" ${st==='in-progress'?'selected':''}>In Progress</option><option value="complete" ${st==='complete'?'selected':''}>Complete</option></select></div></div>`;
+  }).join('');
+}
+function setLS(id,val){DB.levelStatus[id]=val;save();toast('Status updated');}
+
+function renderMS(){
+  const el=document.getElementById('ms-list');
+  const groups=[...new Set(DB.milestones.map(m=>m.lv))];
+  el.innerHTML=groups.map(g=>{
+    const ms=DB.milestones.filter(m=>m.lv===g);
+    const done=ms.filter(m=>m.done).length;
+    const lv=LEVELS.find(l=>l.num===g);
+    const col=lv?lv.col:'var(--primary)';
+    return`<div class="ms-group"><div class="ms-group-hd" style="border-left:3px solid ${col}"><span>${g}</span><span class="ms-group-prog">${done}/${ms.length}</span></div>${ms.map(m=>`<div class="ms-item" onclick="toggleMS('${m.id}')"><div class="ms-check ${m.done?'done':''}"></div><div><div class="ms-txt ${m.done?'done':''}">${esc(m.txt)}</div>${m.dt?`<div class="ms-dt">Completed ${m.dt}</div>`:''}</div></div>`).join('')}</div>`;
+  }).join('');
+}
+function toggleMS(id){const m=DB.milestones.find(m=>m.id===id);if(!m)return;m.done=!m.done;m.dt=m.done?today():null;save();renderMS();renderDashboard();toast(m.done?'Milestone complete ✓':'Milestone unchecked');}
+
+let curNote=null;
+function renderNotes(){
+  const el=document.getElementById('nl-items');
+  if(!DB.notes.length){el.innerHTML='<div style="padding:.68rem .82rem;color:var(--t3);font-size:.8rem">No notes yet</div>';return;}
+  el.innerHTML=DB.notes.map(n=>`<div class="nl-item ${n.id===curNote?'active':''}" onclick="openNote('${n.id}')"><div class="nl-item-title">${esc(n.title||'Untitled')}</div><div class="nl-item-lv">${esc(n.lv||'General')}</div></div>`).join('');
+}
+function newNote(){const n={id:uid(),title:'',body:'',lv:'',ts:Date.now()};DB.notes.push(n);save();curNote=n.id;renderNotes();openNote(n.id);}
+function openNote(id){curNote=id;const n=DB.notes.find(n=>n.id===id);if(!n)return;document.getElementById('ne-empty').style.display='none';const inner=document.getElementById('ne-inner');inner.style.display='flex';document.getElementById('ne-title').value=n.title||'';document.getElementById('ne-body').value=n.body||'';const lv=document.getElementById('ne-lv');lv.innerHTML='<option value="">General</option>'+LEVELS.map(l=>`<option ${n.lv===l.num?'selected':''}>${l.num}</option>`).join('');renderNotes();}
+function saveNote(){if(!curNote)return;const n=DB.notes.find(n=>n.id===curNote);if(!n)return;n.title=document.getElementById('ne-title').value;n.body=document.getElementById('ne-body').value;n.lv=document.getElementById('ne-lv').value;save();}
+function delNote(){if(!curNote)return;DB.notes=DB.notes.filter(n=>n.id!==curNote);curNote=null;save();document.getElementById('ne-empty').style.display='flex';document.getElementById('ne-inner').style.display='none';renderNotes();}
+
+let resFilter='all';
+function toggleAddRes(){document.getElementById('add-res-form').classList.toggle('open');}
+function addRes(){
+  const type=document.getElementById('rf-type').value,lv=document.getElementById('rf-lv').value,title=document.getElementById('rf-title').value.trim(),url=document.getElementById('rf-url').value.trim(),desc=document.getElementById('rf-desc').value.trim();
+  if(!title){toast('Enter a title');return;}
+  DB.resources.push({id:uid(),type,lv,title,url,desc,ts:Date.now()});
+  save();renderResources();toggleAddRes();['rf-title','rf-url','rf-desc'].forEach(id=>document.getElementById(id).value='');toast('Resource saved');
+}
+function filterRes(f,btn){resFilter=f;document.querySelectorAll('.btn-ghost.btn-sm').forEach(b=>b.style.background='');btn.style.background='var(--bg4)';renderResources();}
+function renderResources(){
+  const g=document.getElementById('res-grid');
+  const sug=document.getElementById('res-sug');
+  const lv=document.getElementById('rf-lv').value;
+  const suggestions=(lv&&RES[LEVELS.find(l=>l.num===lv)?.id])||[];
+  sug.innerHTML=suggestions.length?`<div style="margin:.38rem 0"><div class="fl" style="margin-bottom:.28rem">Suggested for ${lv}</div>${suggestions.map(s=>`<button class="btn btn-ghost btn-sm" style="margin:.16rem" onclick="quickAddRes(${JSON.stringify(s).replace(/"/g,'&quot;')})">+ ${s.name}</button>`).join('')}</div>`:'';
+  let res=[...DB.resources];if(resFilter!=='all')res=res.filter(r=>r.type===resFilter);
+  if(!res.length){g.innerHTML='<div style="color:var(--t3);font-size:.86rem;grid-column:1/-1">No resources yet.</div>';return;}
+  g.innerHTML=res.reverse().map(r=>`<div class="res-card"><div class="rc-type">${r.type}</div><div class="rc-title">${esc(r.title)}</div><div class="rc-lv">${esc(r.lv||'General')}</div>${r.desc?`<div class="rc-desc">${esc(r.desc)}</div>`:''}<div class="rc-actions">${r.url?`<a href="${r.url}" target="_blank" class="btn btn-primary btn-sm">Open ↗</a>`:''}<button class="btn btn-danger" onclick="delRes('${r.id}')">✕</button></div></div>`).join('');
+}
+function quickAddRes(s){const lv=document.getElementById('rf-lv').value;DB.resources.push({id:uid(),type:s.type,lv,title:s.name,url:s.url,desc:'',ts:Date.now()});save();renderResources();toast('Added: '+s.name);}
+function delRes(id){DB.resources=DB.resources.filter(r=>r.id!==id);save();renderResources();}
+
+function addError(){
+  const lv=document.getElementById('ef-lv').value,err=document.getElementById('ef-err').value.trim(),tried=document.getElementById('ef-tried').value.trim(),fix=document.getElementById('ef-fix').value.trim(),why=document.getElementById('ef-why').value.trim();
+  if(!err){toast('Enter the error message');return;}
+  DB.errors.push({id:uid(),dt:today(),lv,err,tried,fix,why,ts:Date.now()});
+  save();closeM('modal-err');renderErrors();toast('Error logged ✓');['ef-err','ef-tried','ef-fix','ef-why'].forEach(id=>document.getElementById(id).value='');
+}
+function renderErrors(){
+  const el=document.getElementById('err-list');
+  if(!DB.errors.length){el.innerHTML='<div style="color:var(--t3);font-size:.86rem">No errors logged yet.</div>';return;}
+  el.innerHTML=DB.errors.slice().reverse().map(e=>`<div class="list-item"><div class="li-hd"><span class="li-date">${e.dt}</span><span class="li-tag li-tag-err">${esc(e.lv||'General')}</span><button class="btn btn-danger" onclick="delErr('${e.id}')">✕</button></div><div class="li-err-box">${esc(e.err)}</div>${e.tried?`<div class="li-body"><span class="li-label">Tried: </span>${esc(e.tried)}</div>`:''} ${e.fix?`<div class="li-body" style="color:var(--g2)">✓ Fixed: ${esc(e.fix)}</div>`:''} ${e.why?`<div class="li-body" style="color:var(--t3);font-style:italic">Why: ${esc(e.why)}</div>`:''}</div>`).join('');
+}
+function delErr(id){DB.errors=DB.errors.filter(e=>e.id!==id);save();renderErrors();}
+
+function addSS(){
+  const lv=document.getElementById('sf-lv').value,on=document.getElementById('sf-on').value.trim(),nx=document.getElementById('sf-nx').value.trim(),conf=document.getElementById('sf-conf').value.trim();
+  if(!on){toast('Fill in working on');return;}
+  DB.sessionStates.push({id:uid(),dt:today(),lv,on,nx,conf,ts:Date.now()});
+  save();closeM('modal-ss');renderSS();toast('Session state saved ✓');['sf-on','sf-nx','sf-conf'].forEach(id=>document.getElementById(id).value='');
+}
+function renderSS(){
+  const el=document.getElementById('ss-list');
+  if(!DB.sessionStates.length){el.innerHTML='<div style="color:var(--t3);font-size:.86rem">No session states yet. Start at Phase 1 Output 2.</div>';return;}
+  el.innerHTML=DB.sessionStates.slice().reverse().map(s=>`<div class="list-item"><div class="li-hd"><span class="li-date">${s.dt}</span><span class="li-tag li-tag-ss">${esc(s.lv||'General')}</span><button class="btn btn-danger" onclick="delSS('${s.id}')">✕</button></div><div class="li-field"><span class="li-label">Working on: </span>${esc(s.on)}</div>${s.nx?`<div class="li-field"><span class="li-label">Next: </span>${esc(s.nx)}</div>`:''} ${s.conf?`<div class="li-field"><span class="li-label">Confused by: </span>${esc(s.conf)}</div>`:''}</div>`).join('');
+}
+function delSS(id){DB.sessionStates=DB.sessionStates.filter(s=>s.id!==id);save();renderSS();}
+
+function addADR(){
+  const num=document.getElementById('af-num').value.trim(),lv=document.getElementById('af-lv').value,title=document.getElementById('af-title').value.trim(),ctx=document.getElementById('af-ctx').value.trim(),dec=document.getElementById('af-dec').value.trim(),alt=document.getElementById('af-alt').value.trim(),cons=document.getElementById('af-cons').value.trim(),status=document.getElementById('af-status').value;
+  if(!title||!dec){toast('Title and Decision required');return;}
+  DB.adrs.push({id:uid(),dt:today(),num,lv,title,ctx,dec,alt,cons,status,ts:Date.now()});
+  save();closeM('modal-adr');renderADRs();renderDashboard();toast('ADR saved ✓');['af-num','af-title','af-ctx','af-dec','af-alt','af-cons'].forEach(id=>document.getElementById(id).value='');
+}
+function renderADRs(){
+  const el=document.getElementById('adr-list');
+  if(!DB.adrs.length){el.innerHTML='<div style="color:var(--t3);font-size:.86rem">No ADRs yet. ADR-001 = environment decision on Day 1.</div>';return;}
+  el.innerHTML=DB.adrs.slice().reverse().map(a=>`<div class="list-item" style="border-color:rgba(139,92,246,.2)"><div class="li-hd"><span class="li-tag li-tag-adr">${esc(a.num||'ADR')}</span><span class="li-title">${esc(a.title)}</span><span class="li-date" style="margin-left:auto">${a.dt}</span><button class="btn btn-danger" onclick="delADR('${a.id}')">✕</button></div>${a.ctx?`<div class="li-field"><span class="li-label">Context: </span>${esc(a.ctx)}</div>`:''}<div class="li-field"><span class="li-label">Decision: </span>${esc(a.dec)}</div>${a.alt?`<div class="li-field"><span class="li-label">Alternatives: </span>${esc(a.alt)}</div>`:''} ${a.cons?`<div class="li-field"><span class="li-label">Consequences: </span>${esc(a.cons)}</div>`:''}<div style="margin-top:.32rem;font-family:'JetBrains Mono',monospace;font-size:.58rem" class="${a.status==='Closed'?'status-ok':'status-open'}">● ${a.status}</div></div>`).join('');
+}
+function delADR(id){DB.adrs=DB.adrs.filter(a=>a.id!==id);save();renderADRs();renderDashboard();}
+
+function addDec(){
+  const lv=document.getElementById('df-lv').value,dec=document.getElementById('df-dec').value.trim(),reason=document.getElementById('df-reason').value.trim(),status=document.getElementById('df-status').value;
+  if(!dec){toast('Enter the decision');return;}
+  DB.decisions.push({id:uid(),dt:today(),lv,dec,reason,status,ts:Date.now()});
+  save();closeM('modal-dec');renderDecs();toast('Decision logged ✓');['df-dec','df-reason'].forEach(id=>document.getElementById(id).value='');
+}
+function renderDecs(){
+  const el=document.getElementById('dec-list');
+  if(!DB.decisions.length){el.innerHTML='<div style="color:var(--t3);font-size:.86rem">No decisions logged yet.</div>';return;}
+  const n=DB.decisions.length;
+  el.innerHTML=DB.decisions.slice().reverse().map((d,i)=>`<div class="list-item"><div class="li-hd"><span class="li-tag li-tag-dec">D${String(n-i).padStart(3,'0')}</span><span class="li-date">${d.dt} · ${esc(d.lv||'General')}</span><button class="btn btn-danger" onclick="delDec('${d.id}')">✕</button></div><div class="li-title">${esc(d.dec)}</div>${d.reason?`<div class="li-body">${esc(d.reason)}</div>`:''}<div class="li-field" style="margin-top:.28rem"><span class="${d.status==='Closed'?'status-ok':'status-open'}" style="font-family:'JetBrains Mono',monospace;font-size:.58rem">● ${d.status}</span></div></div>`).join('');
+}
+function delDec(id){DB.decisions=DB.decisions.filter(d=>d.id!==id);save();renderDecs();}
+
+function addWin(){const txt=document.getElementById('win-txt').value.trim();if(!txt){toast('Enter your win');return;}DB.wins.push({id:uid(),dt:today(),txt,ts:Date.now()});save();renderWins();document.getElementById('win-txt').value='';toast('Win recorded 🏆');}
+function renderWins(){
+  const el=document.getElementById('wins-list');
+  if(!DB.wins.length){el.innerHTML='<div style="color:var(--t3);font-size:.86rem">No wins yet. Log your first one — including small wins.</div>';return;}
+  el.innerHTML=DB.wins.slice().reverse().map(w=>`<div class="win-item"><span class="win-star">⭐</span><div><div class="win-txt">${esc(w.txt)}</div><div class="win-date">${w.dt}</div></div><button class="btn btn-danger" onclick="delWin('${w.id}')">✕</button></div>`).join('');
+}
+function delWin(id){DB.wins=DB.wins.filter(w=>w.id!==id);save();renderWins();}
+
+function renderFullLog(){
+  const tbody=document.getElementById('full-log');
+  if(!DB.log.length){tbody.innerHTML='<tr><td colspan="7" style="color:var(--t3);text-align:center;padding:1rem">No sessions yet</td></tr>';return;}
+  const icon={'green':'🟢','yellow':'🟡','red':'🔴'};
+  tbody.innerHTML=DB.log.slice().reverse().map(e=>`<tr><td style="font-family:'JetBrains Mono',monospace;font-size:.68rem">${e.dt}</td><td style="font-family:'JetBrains Mono',monospace;font-size:.7rem">${esc(e.lv)}</td><td>${icon[e.energy]||''}</td><td style="font-family:'JetBrains Mono',monospace;font-size:.72rem">${e.hrs}h</td><td>${esc(e.what)}</td><td style="color:var(--t3);font-size:.78rem">${esc(e.nx||'')}</td><td><button class="btn btn-danger" onclick="delLog('${e.id}')">✕</button></td></tr>`).join('');
+}
+
+function saveWeekly(){
+  const dt=document.getElementById('wr-dt').value||today(),built=document.getElementById('wr-built').value.trim(),tasks=document.getElementById('wr-tasks').value.trim(),post=document.getElementById('wr-post').value.trim(),meta=document.getElementById('wr-meta').value;
+  DB.weekly.push({id:uid(),dt,built,tasks,post,meta,ts:Date.now()});
+  save();renderWeekly();toast('Weekly review saved ✓');['wr-built','wr-tasks','wr-post'].forEach(id=>document.getElementById(id).value='');
+}
+function renderWeekly(){
+  const el=document.getElementById('past-weekly');
+  if(!DB.weekly.length){el.innerHTML='<div style="color:var(--t3);font-size:.86rem">No weekly reviews yet.</div>';return;}
+  el.innerHTML=DB.weekly.slice().reverse().map(r=>`<div class="list-item"><div class="li-hd"><span class="li-date">Week of ${r.dt}</span><button class="btn btn-danger" onclick="delWeekly('${r.id}')">✕</button></div>${r.built?`<div class="li-field"><span class="li-label">Built: </span>${esc(r.built)}</div>`:''} ${r.tasks?`<div class="li-field"><span class="li-label">Next 3 tasks: </span><pre style="font-family:inherit;white-space:pre-wrap;font-size:.82rem;color:var(--t2)">${esc(r.tasks)}</pre></div>`:''} ${r.post?`<div class="li-field"><span class="li-label">Community post: </span>${esc(r.post)}</div>`:''} ${r.meta?`<div class="li-field"><span class="li-label">Meta-work: </span>${esc(r.meta)}</div>`:''}</div>`).join('');
+}
+function delWeekly(id){DB.weekly=DB.weekly.filter(r=>r.id!==id);save();renderWeekly();}
+
+function saveQuarterly(){
+  const q=document.getElementById('qr-q').value.trim(),interest=document.getElementById('qr-int').value,life=document.getElementById('qr-life').value.trim(),track=document.getElementById('qr-track').value.trim();
+  const exit={ec1:document.getElementById('ec1').checked,ec2:document.getElementById('ec2').checked,ec3:document.getElementById('ec3').checked,ec4:document.getElementById('ec4').checked};
+  const allExit=Object.values(exit).every(Boolean);
+  DB.quarterly.push({id:uid(),dt:today(),q,interest,life,track,exit,allExit,ts:Date.now()});
+  save();renderQuarterly();toast('Quarterly review saved ✓');['qr-q','qr-int','qr-life','qr-track'].forEach(id=>document.getElementById(id).value='');['ec1','ec2','ec3','ec4'].forEach(id=>document.getElementById(id).checked=false);
+}
+function renderQuarterly(){
+  const el=document.getElementById('past-quarterly');
+  if(!DB.quarterly.length){el.innerHTML='<div style="color:var(--t3);font-size:.86rem">No quarterly reviews yet.</div>';return;}
+  el.innerHTML=DB.quarterly.slice().reverse().map(r=>`<div class="list-item"><div class="li-hd"><span class="li-date">${r.q||r.dt}</span>${r.allExit?'<span style="color:var(--r2);font-family:JetBrains Mono,monospace;font-size:.6rem;margin-left:.4rem">⚠ All exit criteria met</span>':''}<button class="btn btn-danger" onclick="delQ('${r.id}')">✕</button></div><div class="li-field"><span class="li-label">Interest: </span>${r.interest}/10</div>${r.life?`<div class="li-field"><span class="li-label">Life changes: </span>${esc(r.life)}</div>`:''} ${r.track?`<div class="li-field"><span class="li-label">On track: </span>${esc(r.track)}</div>`:''}</div>`).join('');
+}
+function delQ(id){DB.quarterly=DB.quarterly.filter(r=>r.id!==id);save();renderQuarterly();}
+
+function addVer(){
+  const lv=document.getElementById('vf-lv').value,tool=document.getElementById('vf-tool').value.trim(),ver=document.getElementById('vf-ver').value.trim();
+  if(!tool||!ver){toast('Tool and version required');return;}
+  DB.versions.push({id:uid(),dt:today(),lv,tool,ver,ts:Date.now()});
+  save();closeM('modal-ver');renderVersions();toast('Version entry saved');['vf-tool','vf-ver'].forEach(id=>document.getElementById(id).value='');
+}
+function renderVersions(){
+  const tbody=document.getElementById('ver-list');
+  if(!DB.versions.length){tbody.innerHTML='<tr><td colspan="5" style="color:var(--t3)">No entries yet.</td></tr>';}
+  else{tbody.innerHTML=DB.versions.slice().reverse().map(v=>`<tr><td>${esc(v.lv||'General')}</td><td>${esc(v.tool)}</td><td class="ver-mono">${esc(v.ver)}</td><td style="font-family:'JetBrains Mono',monospace;font-size:.68rem">${v.dt}</td><td><button class="btn btn-danger" onclick="delVer('${v.id}')">✕</button></td></tr>`).join('');}
+  const groups={};
+  DB.versions.forEach(v=>{const g=v.lv||'General';if(!groups[g])groups[g]=[];groups[g].push(v);});
+  let md='# versions.md — Tool Version Registry\n# Update at start of each phase\n\n';
+  Object.entries(groups).forEach(([g,vs])=>{md+=`## ${g}\n`;vs.forEach(v=>{md+=`- ${v.tool}: ${v.ver}  # recorded ${v.dt}\n`;});md+='\n';});
+  document.getElementById('ver-output').textContent=md.trim()||'No entries yet.';
+}
+function delVer(id){DB.versions=DB.versions.filter(v=>v.id!==id);save();renderVersions();}
+function copyVersions(){navigator.clipboard.writeText(document.getElementById('ver-output').textContent).then(()=>toast('Copied to clipboard ✓'));}
+
+function openM(id){document.getElementById(id).classList.add('open');}
+function closeM(id){document.getElementById(id).classList.remove('open');}
+document.querySelectorAll('.modal-bg').forEach(m=>{m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');});});
+
+function exportData(){
+  const blob=new Blob([JSON.stringify(DB,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='eaia-backup-'+today()+'.json';a.click();toast('Backup downloaded ✓');
+}
+
+function toast(msg,dur=2400){const el=document.createElement('div');el.className='toast';el.textContent=msg;document.getElementById('toast-wrap').appendChild(el);setTimeout(()=>el.remove(),dur);}
+function uid(){return Math.random().toString(36).slice(2)+Date.now().toString(36);}
+function today(){return new Date().toISOString().slice(0,10);}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+/* ═══ INIT ═══ */
+populateSels();
+document.getElementById('tb-date').textContent=today();
+document.getElementById('ql-dt').value=today();
+renderDashboard();
+</script>
+</body>
+</html>
