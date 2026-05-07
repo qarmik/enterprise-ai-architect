@@ -74,4 +74,4 @@ The curriculum was designed by Claude (Anthropic) and stress-tested adversariall
 
 ---
 
-*Started: 2026-05-07*
+*Started: 2026-04-30* (The original AI Infrastructure Curriculum)
