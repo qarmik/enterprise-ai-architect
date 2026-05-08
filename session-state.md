@@ -9,7 +9,7 @@
 **Confused by:** [sate all points of friction]
 ---
 
-## Session 1 — 2026-05-07
+#### Session 1 — 2026-05-07
 ---
 **Date:** 2026-05-07
 **Working on:** Phase 0 — creating repository and system files
@@ -67,3 +67,13 @@
 **Confusion:** I wasn't sure when to use `touch filename` vs `code filename`.
 **Resolution:** `touch` creates a new empty file. `code` opens a file for editing. For existing files, just use `code filename.md`. For new files, use `touch filename.md && code filename.md`
 ---
+
+## Session 2 — 2026-05-08
+
+**Date:** 2026-05-08
+**Working on:** Phase 0 — updated python and git version numbers. 
+06e7b39 (HEAD -> main, origin/main, origin/HEAD) phase0 - complete system files with real version numbers
+89a3364 Changed the template of session-sate.md and the date of first commit
+4bcf728 Clarify purpose of session-state.md in README
+**Next step:** Complete Phase 0 folder structure and commit all files - Done
+**Confused by:** # Phase 0 — Confusion & Resolution Log - stating all points of friction : None on 2026-05-08
