@@ -1,9 +1,9 @@
 # versions.md — Tool Version Registry
 # Rule: add new tools at start of each phase. Never delete old entries.
 
-## Phase 0 — Foundations — 2026-04-30
-- Python: [run python3 --version and paste the result here]
-- Git: [run git --version and paste the result here]
+## Phase 0 — Foundations — 2026-05-08
+- Python: 3.12.1
+- Git: 2.53.0
 - OS: Ubuntu 22.04 (GitHub Codespaces)
 - Environment: GitHub Codespaces
 
