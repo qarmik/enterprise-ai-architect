@@ -82,5 +82,5 @@
 ---
 **Date:** 2026-05-10
 **Working on:** [phase-0/hello.py]
-**Next step:** [one specific next action]
-**Confused by:** [sate all points of friction]
+**Next step:** [updated hello.py to reflect 42 months long curriculum]
+**Confused by:** [None encountered on Day 4/Session 3- 2026-05-10]
