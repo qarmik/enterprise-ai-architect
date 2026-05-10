@@ -10,3 +10,12 @@
 **Fixed by:** [exact command or change that worked]
 **Why it happened:** [one sentence]
 ---
+
+## Session 3
+---
+**Date:** 2026-05-10
+**Error:** [NameError: name 'months' is not defined]
+**Tried:** [corrected the error in 'months']
+**Fixed by:** [cause was a typo 'motnhs' - fixed it]
+**Why it happened:** [cause was a typo 'motnhs']
+---

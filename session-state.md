@@ -77,3 +77,10 @@
 4bcf728 Clarify purpose of session-state.md in README
 **Next step:** Complete Phase 0 folder structure and commit all files - Done
 **Confused by:** # Phase 0 — Confusion & Resolution Log - stating all points of friction : None on 2026-05-08
+
+## Session 3- 2026-05-10
+---
+**Date:** 2026-05-10
+**Working on:** [phase-0/hello.py]
+**Next step:** [one specific next action]
+**Confused by:** [sate all points of friction]
