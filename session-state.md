@@ -84,3 +84,32 @@
 **Working on:** [phase-0/hello.py]
 **Next step:** [updated hello.py to reflect 42 months long curriculum]
 **Confused by:** [None encountered on Day 4/Session 3- 2026-05-10]
+
+## Session 4- 2026-05-10
+---
+**Date:** 2026-05-10
+**Working on:** [phase-0/test-hello.py]
+**Next step:** [updated hello.py to reflect 42 months long curriculum]
+**Confused by:** 1. Meaning of #!/usr/bin/env python
+Confusion: I wasn't sure what the line at the very beginning of a Python script means.
+Resolution: It is called a shebang — it tells the operating system which interpreter to use to run the file. /usr/bin/env searches for Python wherever it is installed on the system, making the script portable. The correct form is #!/usr/bin/env python3 — with no slash before python, otherwise it causes an error.
+
+2. Meaning of Triple Quotes """
+Confusion: I wasn't sure why a program starts with three apostrophes/quotes """.
+Resolution: Triple quotes in Python serve two purposes:
+
+As a docstring — when placed at the start of a file, function, or class, they act as a built-in description explaining what the code does
+
+As a multi-line string — they allow text to span multiple lines, unlike regular single quotes which only hold one line
+
+Triple quotes are not comments (comments use #) — they are technically strings that Python treats as documentation when not assigned to a variable.
+
+I thought Python was "doing the work itself," but discovered Python is just talking to the OS through pre-built tools.
+
+Key friction busted: 
+
+| Fiction You Had                       | Reality                             |
+| ------------------------------------- | ----------------------------------- |
+| Python "runs" other programs          | Python asks OS via subprocess       |
+| sys.executable is optional            | Required for correct Python version |
+| Code "does work itself"               | Code = instructions to OS butler    |

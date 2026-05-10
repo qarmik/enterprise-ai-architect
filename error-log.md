@@ -19,3 +19,12 @@
 **Fixed by:** [cause was a typo 'motnhs' - fixed it]
 **Why it happened:** [cause was a typo 'motnhs']
 ---
+
+## Session 4
+---
+**Tried:** 
+1. Ran `pytest phase-0/test-hello.py` → collected 0 items / 1 error
+2. Identified no quotes around filename on line number 23
+**Fixed by:** Added quotes around filename: `[sys.executable, "phase-0/hello.py"]`
+**Why it happened:** `phase-0/hello.py` without quotes was treated as Python code (variable subtraction) instead of a string filename for the OS.
+---
