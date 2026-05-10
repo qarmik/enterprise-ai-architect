@@ -89,7 +89,7 @@
 ---
 **Date:** 2026-05-10
 **Working on:** [phase-0/test-hello.py]
-**Next step:** " Session 5 done definition -- Done = versions.md has pytest 9.0.3 added, a requirements.txt file exists in the root with pytest listed, and both are committed and pushed."
+**Next step:** " Session 5 done definition --Done = versions.md has pytest 9.0.3 added, a requirements.txt file exists in the root with pytest listed, and both are committed and pushed."
 **Confused by:** 1. Meaning of #!/usr/bin/env python
 Confusion: I wasn't sure what the line at the very beginning of a Python script means.
 Resolution: It is called a shebang — it tells the operating system which interpreter to use to run the file. /usr/bin/env searches for Python wherever it is installed on the system, making the script portable. The correct form is #!/usr/bin/env python3 — with no slash before python, otherwise it causes an error.
@@ -113,3 +113,22 @@ Key friction busted:
 | Python "runs" other programs          | Python asks OS via subprocess       |
 | sys.executable is optional            | Required for correct Python version |
 | Code "does work itself"               | Code = instructions to OS butler    |
+
+Session 5:
+Date: 2026-05-10
+Working on: Dependency Management: update versions.md, add requirements.txt -- Reproducibility is the primary concern while building artifacts.
+Next Step: Session 6: Day 4 - 2026-05-11
+Confused by: --break-system-packages safety (✅ resolved: use venv)
+
+Virtual environment activation frequency (✅ resolved: create once, activate per session)
+
+.gitignore for existing files (✅ resolved: just append venv/ line)
+
+Status: ✅ Production-ready environment complete!
+
+Today's Wins
+text
+✅ requirements.txt → pytest==9.0.3 installed
+✅ venv created + activated + gitignored  
+✅ pip upgraded to 26.1.1
+✅ Reproducible setup locked in
