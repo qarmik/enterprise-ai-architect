@@ -116,7 +116,7 @@ Key friction busted:
 
 Session 5:
 Date: 2026-05-10
-Working on: Dependency Management: update versions.md, add requirements.txt -- Reproducibility is the primary concern while building artifacts.
+Working on: Dependency Management: update versions.md, add requirements.txt --        Reproducibility is the primary concern while building artifacts. Dependency management complete
 Next Step: Session 6: Day 4 - 2026-05-11
 Confused by: --break-system-packages safety (✅ resolved: use venv)
 
