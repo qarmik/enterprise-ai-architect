@@ -89,7 +89,7 @@
 ---
 **Date:** 2026-05-10
 **Working on:** [phase-0/test-hello.py]
-**Next step:** [updated hello.py to reflect 42 months long curriculum]
+**Next step:** " Session 5 done definition -- Done = versions.md has pytest 9.0.3 added, a requirements.txt file exists in the root with pytest listed, and both are committed and pushed."
 **Confused by:** 1. Meaning of #!/usr/bin/env python
 Confusion: I wasn't sure what the line at the very beginning of a Python script means.
 Resolution: It is called a shebang — it tells the operating system which interpreter to use to run the file. /usr/bin/env searches for Python wherever it is installed on the system, making the script portable. The correct form is #!/usr/bin/env python3 — with no slash before python, otherwise it causes an error.
