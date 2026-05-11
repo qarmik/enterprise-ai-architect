@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Curriculum Addendum — Three Streams and Execution Discipline</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800;900&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#04080f;--bg2:#080e1a;--bg3:#0c1422;--bg4:#101c2e;
+  --b1:#1a3050;--b2:#1f3d63;
+  --primary:#3b82f6;--p2:#60a5fa;--p3:#93c5fd;--p4:#bfdbfe;
+  --accent:#f59e0b;--a2:#fbbf24;--a3:#fcd34d;
+  --green:#10b981;--g2:#34d399;--g3:#6ee7b7;
+  --red:#ef4444;--r2:#fca5a5;
+  --purple:#8b5cf6;--pu2:#a78bfa;
+  --cyan:#06b6d4;--cy2:#22d3ee;
+  --orange:#f97316;--or2:#fb923c;
+  --text:#e2e8f0;--t2:#94a3b8;--t3:#64748b;--t4:#475569;
+  --white:#ffffff;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:15px;scroll-behavior:smooth}
+body{font-family:'Crimson Pro',serif;background:var(--bg);color:var(--text);line-height:1.78;overflow-x:hidden}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--b2);border-radius:2px}
+
+.pb{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--orange),var(--accent),var(--green));width:0%;z-index:200;transition:width .1s}
+
+.hero{min-height:70vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:5rem 2rem 4rem;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(249,115,22,.1) 0%,transparent 65%),radial-gradient(ellipse 45% 40% at 85% 85%,rgba(16,185,129,.08) 0%,transparent 55%),var(--bg)}
+.grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(26,48,80,.28) 1px,transparent 1px),linear-gradient(90deg,rgba(26,48,80,.28) 1px,transparent 1px);background-size:52px 52px;mask-image:radial-gradient(ellipse 85% 75% at 50% 50%,black 20%,transparent 80%)}
+.hero-c{position:relative;z-index:1;max-width:780px;display:flex;flex-direction:column;align-items:center;gap:1.4rem}
+.h-eye{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.32em;text-transform:uppercase;color:var(--orange);animation:fu .8s ease both}
+.h-title{font-family:'Syne',sans-serif;font-size:clamp(2rem,5vw,4rem);font-weight:900;line-height:1.06;color:var(--white);animation:fu .8s .1s ease both}
+.h-sub{font-size:1rem;color:var(--t2);max-width:560px;line-height:1.88;animation:fu .8s .2s ease both}
+.h-verdict{background:rgba(8,14,26,.85);border:1px solid rgba(249,115,22,.25);border-radius:8px;padding:1rem 1.5rem;max-width:640px;width:100%;text-align:left;animation:fu .8s .35s ease both;backdrop-filter:blur(8px)}
+.hv-lbl{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--orange);margin-bottom:.45rem;display:flex;align-items:center;gap:.5rem}
+.hv-lbl::after{content:'';flex:1;height:1px;background:rgba(249,115,22,.2)}
+.hv-body{font-size:.9rem;color:var(--t2);line-height:1.78}
+.hv-body strong{color:var(--white)}
+@keyframes fu{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+.page{max-width:860px;margin:0 auto;padding:3rem 1.5rem 8rem}
+
+.part-div{background:linear-gradient(135deg,var(--bg2),var(--bg3));border:1px solid var(--b1);border-radius:10px;padding:2rem 2.2rem;margin:3rem 0 2rem;position:relative;overflow:hidden;text-align:center}
+.pd-num{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:var(--t4);margin-bottom:.4rem}
+.pd-title{font-family:'Syne',sans-serif;font-size:1.55rem;font-weight:900;color:var(--white);margin-bottom:.4rem}
+.pd-sub{font-size:.93rem;color:var(--t2);line-height:1.8;max-width:580px;margin:0 auto}
+
+.sec-id{font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:.22em;text-transform:uppercase;color:var(--t4);margin-bottom:.2rem}
+.sec-title{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;color:var(--white);padding-bottom:.42rem;border-bottom:1px solid var(--b1);margin-bottom:.9rem}
+.sec-block{margin-bottom:3rem}
+.body-text{font-size:.95rem;color:var(--t2);line-height:1.85;margin-bottom:.85rem}
+.body-text strong{color:var(--white)}
+
+.sub-id{font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:.18em;text-transform:uppercase;color:var(--t3);margin-bottom:.18rem;margin-top:1.2rem}
+.sub-title{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700;color:var(--p3);margin-bottom:.5rem}
+
+/* THREE STREAMS VISUAL */
+.streams-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.9rem;margin:1.2rem 0}
+@media(max-width:680px){.streams-grid{grid-template-columns:1fr}}
+.stream-card{border-radius:8px;padding:1.2rem 1.3rem;border:1px solid;position:relative;overflow:hidden}
+.sc-1{background:rgba(59,130,246,.07);border-color:rgba(59,130,246,.25)}
+.sc-2{background:rgba(16,185,129,.07);border-color:rgba(16,185,129,.25)}
+.sc-3{background:rgba(245,158,11,.07);border-color:rgba(245,158,11,.25)}
+.sc-num{font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:.18em;text-transform:uppercase;margin-bottom:.4rem}
+.sc-1 .sc-num{color:var(--p2)}.sc-2 .sc-num{color:var(--g2)}.sc-3 .sc-num{color:var(--a2)}
+.sc-title{font-family:'Syne',sans-serif;font-size:.95rem;font-weight:800;color:var(--white);margin-bottom:.35rem}
+.sc-body{font-size:.84rem;color:var(--t2);line-height:1.68;margin-bottom:.65rem}
+.sc-how{font-size:.8rem;line-height:1.65;padding:.55rem .7rem;border-radius:5px}
+.sc-1 .sc-how{background:rgba(59,130,246,.1);color:var(--p3)}
+.sc-2 .sc-how{background:rgba(16,185,129,.1);color:var(--g3)}
+.sc-3 .sc-how{background:rgba(245,158,11,.1);color:var(--a3)}
+.sc-how-lbl{font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.25rem;font-weight:700}
+
+/* CALLOUTS */
+.cl{border-radius:6px;padding:.85rem 1rem;font-size:.87rem;line-height:1.75;border-left:3px solid;margin:.6rem 0}
+.cl-lbl{font-family:'JetBrains Mono',monospace;font-size:.57rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:.3rem;font-weight:600}
+.cl-warn{background:rgba(245,158,11,.07);border-color:var(--accent);color:#fef3c7}.cl-warn .cl-lbl{color:var(--a2)}
+.cl-ok{background:rgba(16,185,129,.07);border-color:var(--green);color:var(--g3)}.cl-ok .cl-lbl{color:var(--g2)}
+.cl-red{background:rgba(239,68,68,.07);border-color:var(--red);color:var(--r2)}.cl-red .cl-lbl{color:var(--red)}
+.cl-purple{background:rgba(139,92,246,.07);border-color:var(--purple);color:#ede9fe}.cl-purple .cl-lbl{color:var(--pu2)}
+.cl-orange{background:rgba(249,115,22,.07);border-color:var(--orange);color:#ffedd5}.cl-orange .cl-lbl{color:var(--or2)}
+.cl-info{background:rgba(59,130,246,.07);border-color:var(--primary);color:var(--p4)}.cl-info .cl-lbl{color:var(--p2)}
+
+/* MAPPING TABLE */
+.map-table{width:100%;border-collapse:collapse;font-size:.84rem;margin:.6rem 0}
+.map-table thead tr{background:var(--bg3)}
+.map-table th{font-family:'JetBrains Mono',monospace;font-size:.57rem;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);text-align:left;padding:.5rem .85rem;border-bottom:1px solid var(--b1);font-weight:600}
+.map-table td{padding:.58rem .85rem;border-bottom:1px solid rgba(26,48,80,.35);color:var(--t2);vertical-align:top;line-height:1.6}
+.map-table tr:last-child td{border-bottom:none}
+.map-table .ph{font-family:'JetBrains Mono',monospace;font-size:.73rem;color:var(--p2)}
+.map-table .art{color:var(--g2)}.map-table .wrt{color:var(--a2)}.map-table .cur{color:var(--p3)}
+
+/* WARNING BOX */
+.warning-box{background:linear-gradient(135deg,rgba(239,68,68,.08),rgba(239,68,68,.04));border:1px solid rgba(239,68,68,.25);border-radius:8px;padding:1.3rem 1.5rem;margin:1.2rem 0}
+.wb-lbl{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:.55rem;display:flex;align-items:center;gap:.5rem}
+.wb-lbl::after{content:'';flex:1;height:1px;background:rgba(239,68,68,.2)}
+.wb-item{display:flex;align-items:flex-start;gap:.65rem;font-size:.88rem;color:var(--r2);margin-bottom:.45rem;line-height:1.65}
+.wb-item::before{content:'⚠';font-size:.8rem;flex-shrink:0;margin-top:.12rem}
+.wb-item:last-child{margin-bottom:0}
+
+/* PHASE MAPPING */
+.phase-row{background:var(--bg2);border:1px solid var(--b1);border-radius:7px;padding:1rem 1.2rem;margin:.6rem 0}
+.pr-phase{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--t3);margin-bottom:.3rem}
+.pr-title{font-family:'Syne',sans-serif;font-size:.9rem;font-weight:700;color:var(--white);margin-bottom:.5rem}
+.pr-streams{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.5rem}
+@media(max-width:600px){.pr-streams{grid-template-columns:1fr}}
+.ps{border-radius:5px;padding:.5rem .65rem;font-size:.8rem;line-height:1.55}
+.ps-1{background:rgba(59,130,246,.08);color:var(--p3)}.ps-2{background:rgba(16,185,129,.08);color:var(--g3)}.ps-3{background:rgba(245,158,11,.08);color:var(--a3)}
+.ps-lbl{font-family:'JetBrains Mono',monospace;font-size:.54rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.18rem;font-weight:700;opacity:.75}
+
+code{font-family:'JetBrains Mono',monospace;font-size:.8em;background:rgba(59,130,246,.09);border:1px solid rgba(59,130,246,.18);padding:.1em .42em;border-radius:3px;color:var(--p3)}
+
+/* VERDICT CARDS */
+.verdict-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin:1rem 0}
+@media(max-width:580px){.verdict-grid{grid-template-columns:1fr}}
+.vcard{border-radius:7px;padding:1.1rem 1.2rem;border:1px solid}
+.vc-accept{background:rgba(16,185,129,.07);border-color:rgba(16,185,129,.25)}
+.vc-reject{background:rgba(239,68,68,.07);border-color:rgba(239,68,68,.22)}
+.vc-lbl{font-family:'JetBrains Mono',monospace;font-size:.57rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:.35rem;font-weight:700}
+.vc-accept .vc-lbl{color:var(--g2)}.vc-reject .vc-lbl{color:var(--red)}
+.vc-body{font-size:.86rem;color:var(--t2);line-height:1.7}
+</style>
+</head>
+<body>
+<div class="pb" id="pb"></div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div><div class="grid-bg"></div>
+  <div class="hero-c">
+    <div class="h-eye">Curriculum Addendum · Reviewed by Claude · May 2026</div>
+    <h1 class="h-title">Three Streams and Execution Discipline</h1>
+    <p class="h-sub">An addendum to the Enterprise AI Systems Architect curriculum. Provenance: strategic observation by ChatGPT (Commander V). Reviewed, adjudicated, and structured by Claude. Accepted elements only.</p>
+    <div class="h-verdict">
+      <div class="hv-lbl">Adjudication Verdict</div>
+      <div class="hv-body">
+        <strong>Accepted:</strong> The three-stream mental model and the psychological warning about overdesign before implementation.<br><br>
+        <strong>Rejected:</strong> Hackathons as a structural addition. Parallel "small builds" track as a separate obligation.<br><br>
+        <strong>Reason:</strong> The curriculum already contains all three streams. This addendum names them explicitly so they are visible — it does not add new activities or fragment the constrained 7–10 hour weekly budget.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- PART 1: THE THREE STREAMS -->
+<div class="part-div">
+  <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--orange),var(--green),transparent)"></div>
+  <div class="pd-num">Addendum · Section A</div>
+  <div class="pd-title">The Three Streams</div>
+  <div class="pd-sub">The curriculum has always contained three simultaneous streams of work. This section names them explicitly so you can see what you are doing and why each stream is necessary.</div>
+</div>
+
+<div class="sec-block">
+  <div class="sec-id">§ A.1</div>
+  <div class="sec-title">A.1 — What the Three Streams Are</div>
+
+  <div class="body-text">Any serious technical transformation has three things running simultaneously. When one stream collapses, the other two become unstable. The curriculum was designed with all three present — this section makes that visible.</div>
+
+  <div class="streams-grid">
+    <div class="stream-card sc-1">
+      <div class="sc-num">Stream 1</div>
+      <div class="sc-title">Curriculum</div>
+      <div class="sc-body">Deep capability accumulation. Structured, sequenced, phase-gated. Moves you from foundational fluency to enterprise architecture depth over 42 months.</div>
+      <div class="sc-how">
+        <div class="sc-how-lbl">How it appears in this curriculum</div>
+        The six phases. The ADR collection. The operational mathematics thread. The governance thread. The benchmark reports. The postmortems.
+      </div>
+    </div>
+    <div class="stream-card sc-2">
+      <div class="sc-num">Stream 2</div>
+      <div class="sc-title">Artifacts</div>
+      <div class="sc-body">Execution realism. Built things that run. Exposes false understanding that theory cannot detect. Forces precision about what "working" means.</div>
+      <div class="sc-how">
+        <div class="sc-how-lbl">How it appears in this curriculum</div>
+        The 14 artifacts. The test files. The CI pipeline. The benchmark reports with real numbers. The brownfield rescue exercise. The capstone system.
+      </div>
+    </div>
+    <div class="stream-card sc-3">
+      <div class="sc-num">Stream 3</div>
+      <div class="sc-title">Public Writing</div>
+      <div class="sc-body">Intellectual visibility. Forces clarity of thought. Builds external credibility. Makes growth legible to others and to yourself.</div>
+      <div class="sc-how">
+        <div class="sc-how-lbl">How it appears in this curriculum</div>
+        The deload week post after each phase. The community post every Sunday from Phase 2. The ADR collection as public documentation. The GitHub repository itself.
+      </div>
+    </div>
+  </div>
+
+  <div class="cl cl-ok">
+    <div class="cl-lbl">Why All Three Are Already Present</div>
+    The curriculum was not missing any of these streams. The addendum names them because naming them helps you recognise when one is being neglected. If a week passes with no artifact progress, Stream 2 is starving. If three months pass with no public post, Stream 3 is starving. The weekly review question "did you build anything this week?" is Stream 2's health check. The Sunday community post ritual is Stream 3's health check.
+  </div>
+</div>
+
+<div class="sec-block">
+  <div class="sec-id">§ A.2</div>
+  <div class="sec-title">A.2 — What Happens When a Stream Collapses</div>
+
+  <div class="body-text">Each failure mode is a real trap. The curriculum's structure guards against all three — but the guard only works if you understand what you are being guarded against.</div>
+
+  <div class="warning-box">
+    <div class="wb-lbl">Three Failure Modes</div>
+    <div class="wb-item"><strong>Stream 1 collapses (no curriculum):</strong> Shallow hype-builder culture. Framework-chasing. Demo-capable, systems-ignorant. Can ship fast, cannot explain why anything works.</div>
+    <div class="wb-item"><strong>Stream 2 collapses (no artifacts):</strong> Intellectually interesting, cannot ship. Deep conceptual understanding that has never been stress-tested by implementation. Avoidance through sophistication. The specific risk for someone with strong systems cognition and a full-time demanding job.</div>
+    <div class="wb-item"><strong>Stream 3 collapses (no writing):</strong> Invisible growth. 42 months of accumulated capability that nobody outside your Codespace can see. The portfolio exists but cannot speak for itself. Technical communities remain unaware you exist.</div>
+  </div>
+
+  <div class="cl cl-warn">
+    <div class="cl-lbl">Your Specific Risk — Stream 2</div>
+    The observation from ChatGPT is accurate and worth preserving: your temperament naturally drifts toward systems philosophy, architecture frameworks, and conceptual synthesis. These are genuine strengths. Without shipping pressure they can become avoidance through sophistication — endless refinement of the curriculum, endless architectural thinking, insufficient contact with the implementation reality that exposes false understanding. The done definition protocol and the artifact-first principle exist specifically to counteract this. They are not bureaucratic rituals. They are the mechanism that keeps Stream 2 alive.
+  </div>
+</div>
+
+<div class="sec-block">
+  <div class="sec-id">§ A.3</div>
+  <div class="sec-title">A.3 — The Three Streams Mapped Across All Six Phases</div>
+
+  <div class="phase-row">
+    <div class="pr-phase">Phase 0 · Foundations</div>
+    <div class="pr-title">Establishing all three streams simultaneously</div>
+    <div class="pr-streams">
+      <div class="ps ps-1"><div class="ps-lbl">Curriculum</div>Linux, Python, Git, GPU physics, operational mathematics</div>
+      <div class="ps ps-2"><div class="ps-lbl">Artifacts</div>hello.py, test file, CI pipeline, three domain artifacts</div>
+      <div class="ps ps-3"><div class="ps-lbl">Writing</div>ADR-001, ADR-002, ADR-003. Debugging journal entry 1</div>
+    </div>
+  </div>
+
+  <div class="phase-row">
+    <div class="pr-phase">Phase 1 · Inference Systems</div>
+    <div class="pr-title">First serious Stream 2 stress-test</div>
+    <div class="pr-streams">
+      <div class="ps ps-1"><div class="ps-lbl">Curriculum</div>vLLM, PagedAttention, KV cache, quantization, VRAM arithmetic</div>
+      <div class="ps ps-2"><div class="ps-lbl">Artifacts</div>Benchmark report with real numbers. vLLM in Docker. Configuration document</div>
+      <div class="ps ps-3"><div class="ps-lbl">Writing</div>ADR-004, ADR-005. Benchmark report as public document. Hiring Manager Lens notes</div>
+    </div>
+  </div>
+
+  <div class="phase-row">
+    <div class="pr-phase">Phase 2 · AI Engineering</div>
+    <div class="pr-title">Stream 3 activates publicly</div>
+    <div class="pr-streams">
+      <div class="ps ps-1"><div class="ps-lbl">Curriculum</div>LangGraph, vector RAG, tool permissions, state checkpointing</div>
+      <div class="ps ps-2"><div class="ps-lbl">Artifacts</div>Multi-agent system deployed. Vector RAG with measured retrieval precision. Open-source PR</div>
+      <div class="ps ps-3"><div class="ps-lbl">Writing</div>ADR-006 through ADR-008. Weekly community post begins. RAG evaluation report</div>
+    </div>
+  </div>
+
+  <div class="phase-row">
+    <div class="pr-phase">Phase 3 · Enterprise AI</div>
+    <div class="pr-title">All three streams at full intensity</div>
+    <div class="pr-streams">
+      <div class="ps ps-1"><div class="ps-lbl">Curriculum</div>GraphRAG, evaluation pipelines, OpenTelemetry, SLOs</div>
+      <div class="ps ps-2"><div class="ps-lbl">Artifacts</div>CI/CD with evaluation gate. Full observability stack. First real postmortem</div>
+      <div class="ps ps-3"><div class="ps-lbl">Writing</div>SLO document. Evaluation methodology. Postmortem. Weekly posts with specific technical observations</div>
+    </div>
+  </div>
+
+  <div class="phase-row">
+    <div class="pr-phase">Phase 4 · Governance and HITL</div>
+    <div class="pr-title">Domain moat fully activated — Stream 1 meets institutional experience</div>
+    <div class="pr-streams">
+      <div class="ps ps-1"><div class="ps-lbl">Curriculum</div>Async HITL, risk tiers, AIBOM, NIST AI RMF, ISO 42001</div>
+      <div class="ps ps-2"><div class="ps-lbl">Artifacts</div>Governed agentic system. AIBOM auto-generated. Compliance mapping</div>
+      <div class="ps ps-3"><div class="ps-lbl">Writing</div>Governance Policy Document. NIST mapping. ISO gap analysis. ADR-011, ADR-012</div>
+    </div>
+  </div>
+
+  <div class="phase-row">
+    <div class="pr-phase">Phase 5 · Advanced Infrastructure and Career Entry</div>
+    <div class="pr-title">All three streams converge into portfolio</div>
+    <div class="pr-streams">
+      <div class="ps ps-1"><div class="ps-lbl">Curriculum</div>Kubernetes, Helm, Triton conceptual fluency, CKA</div>
+      <div class="ps ps-2"><div class="ps-lbl">Artifacts</div>Capstone system. Architecture defense. Brownfield rescue. Operations runbook</div>
+      <div class="ps ps-3"><div class="ps-lbl">Writing</div>Architecture defense document. Cost analysis. Portfolio narrative. Interview preparation</div>
+    </div>
+  </div>
+</div>
+
+<!-- PART 2: EXECUTION DISCIPLINE -->
+<div class="part-div">
+  <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--red),var(--orange),transparent)"></div>
+  <div class="pd-num">Addendum · Section B</div>
+  <div class="pd-title">Execution Discipline</div>
+  <div class="pd-sub">The psychological warning from the external review, preserved in full because it is accurate and relevant throughout all 42 months.</div>
+</div>
+
+<div class="sec-block">
+  <div class="sec-id">§ B.1</div>
+  <div class="sec-title">B.1 — The Overdesign Warning</div>
+
+  <div class="body-text">The institutional systems cognition that makes you effective in Phase 4 governance work is a liability in Phase 0-2 prototyping. The SBI instinct toward procedural completeness, operational robustness, and structural thoroughness is earned and real. Applied prematurely to early artifact building, it produces over-engineered prototypes, infinite planning loops, and the particular failure mode of <strong>avoidance through sophistication</strong>.</div>
+
+  <div class="cl cl-orange">
+    <div class="cl-lbl">The Rule for Early Phases</div>
+    Early systems should be ugly but alive. A working ugly system teaches more than a beautifully designed system that does not yet exist. You can refine later. You cannot learn from something that has not run. The done definition protocol enforces this — it defines done as a specific running output, not as a specific quality level.
+  </div>
+
+  <div class="sub-id">§ B.1.1</div>
+  <div class="sub-title">Recognising Overdesign in Real Time</div>
+  <div class="body-text">You are overdesigning when any of these are true during a session:</div>
+
+  <div class="warning-box">
+    <div class="wb-lbl">Overdesign Signals</div>
+    <div class="wb-item">You are refining the architecture of something that has not yet run once</div>
+    <div class="wb-item">You are reading about the right way to structure something instead of structuring it badly and running it</div>
+    <div class="wb-item">You are adding error handling to code that has not yet produced a correct output on the happy path</div>
+    <div class="wb-item">You are writing documentation for a system whose behaviour you do not yet understand from running it</div>
+    <div class="wb-item">The session timer is at 60 minutes and nothing has been committed</div>
+  </div>
+
+  <div class="body-text">When you notice any of these: stop. Write the ugliest version that could possibly run. Run it. Commit it. Refine in the next session.</div>
+</div>
+
+<div class="sec-block">
+  <div class="sec-id">§ B.2</div>
+  <div class="sec-title">B.2 — What Was Rejected and Why</div>
+
+  <div class="body-text">The external review proposed hackathons and a parallel small-builds track as structural additions. These were reviewed and rejected. The reasoning is recorded here so the decision is not revisited without new information.</div>
+
+  <div class="verdict-grid">
+    <div class="vcard vc-reject">
+      <div class="vc-lbl">Rejected — Hackathons</div>
+      <div class="vc-body">A single hackathon weekend consumes an entire week's study budget and produces an artifact that does not fit the curriculum's phase structure. The compressed execution environment that hackathons provide is already present in the curriculum: the 90-minute timer on benchmark report sections, the brownfield rescue exercise, the commit-on-timer-end rule. Adding hackathons does not add compressed execution — it adds calendar disruption and a parallel artifact that competes with the primary build track.</div>
+    </div>
+    <div class="vcard vc-reject">
+      <div class="vc-lbl">Rejected — Parallel Small-Builds Track</div>
+      <div class="vc-body">The curriculum artifacts are the small public builds. They are deployed, public, and operational. Adding a separate track of "small builds" alongside the curriculum artifacts fragments the 7–10 hour weekly budget and produces two shallow things instead of one deep thing. The risk is not that the curriculum lacks execution realism — it is that execution realism requires all available time to be directed at the primary artifact, not divided across multiple parallel projects.</div>
+    </div>
+  </div>
+
+  <div class="cl cl-info">
+    <div class="cl-lbl">When This Decision Should Be Revisited</div>
+    If by Phase 3 the weekly budget has consistently exceeded 10 hours and all curriculum artifacts are on track, a small parallel build becomes viable. The trigger is surplus capacity, not enthusiasm. The condition for revisiting this decision is: Phase 3 artifacts are ahead of schedule AND weekly hours are averaging above 10. If both conditions are not true, the decision stands.
+  </div>
+</div>
+
+<!-- PART 3: THE SINGLE SENTENCE -->
+<div class="sec-block" style="margin-top:3rem">
+  <div class="sec-id">§ C</div>
+  <div class="sec-title">C — The Single Sentence This Addendum Reduces To</div>
+
+  <div class="body-text" style="font-size:1.05rem;line-height:2">The curriculum already contains all three streams — curriculum depth, artifact execution, and public writing. Your job is to keep all three alive simultaneously, resist the specific failure mode of avoidance through sophistication, and trust that ugly working things teach more than beautiful unbuilt designs.</div>
+
+  <div class="cl cl-purple">
+    <div class="cl-lbl">Provenance of This Addendum</div>
+    Strategic observation: ChatGPT (Commander V). Review, adjudication, rejection of structural additions, and final structure: Claude (Anthropic). Both contributions are recorded because the reasoning behind the decisions is as important as the decisions themselves. This is the same principle as the ADR log — decisions with visible reasoning can be updated when circumstances change. Decisions without reasoning cannot be distinguished from arbitrary choices.
+  </div>
+</div>
+
+</div>
+
+<script>
+window.addEventListener('scroll',()=>{
+  const e=document.documentElement;
+  document.getElementById('pb').style.width=(e.scrollTop/(e.scrollHeight-e.clientHeight)*100)+'%';
+},{passive:true});
+</script>
+</body>
+</html>
