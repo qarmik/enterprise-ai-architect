@@ -132,3 +132,35 @@ text
 ✅ venv created + activated + gitignored  
 ✅ pip upgraded to 26.1.1
 ✅ Reproducible setup locked in
+
+Session 6 - Date: 2026-05-11 & 2026-05-13
+Working on: Dependency and deployment debugging for the enterprise-ai-architect repository, including CI workflow fixes, requirements.txt cleanup, and GitHub Pages workflow troubleshooting.
+Next step: Update the GitHub Pages workflow so it uploads the required github-pages artifact before the deploy job runs.
+Confused by:
+
+Why the first CI run failed even though the workflow syntax looked correct.
+
+Why requirements.txt caused a pip error from a line that was not a package.
+
+Why GitHub Pages deployment reached the deploy step but still failed.
+
+Whether warning messages in workflow logs were actual failure causes or just noise.
+
+Corrective Actions
+Keep requirements.txt limited to package lines only.
+
+Verify file contents before committing with a quick terminal check.
+
+Use a two-stage Pages workflow: build/upload first, deploy second.
+
+Read workflow logs from the first real error upward instead of getting distracted by warnings.
+
+Session Outcome
+CI dependency error identified and understood.
+
+requirements.txt corruption bug identified and fixed.
+
+GitHub Pages deployment root cause identified.
+
+Next clear action established: repair the Pages workflow artifact upload path.
+
