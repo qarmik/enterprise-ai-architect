@@ -114,7 +114,7 @@ Key friction busted:
 | sys.executable is optional            | Required for correct Python version |
 | Code "does work itself"               | Code = instructions to OS butler    |
 
-Session 5:
+## Session 5:
 Date: 2026-05-10
 Working on: Dependency Management: update versions.md, add requirements.txt --        Reproducibility is the primary concern while building artifacts. Dependency management complete
 Next Step: Session 6: Day 4 - 2026-05-11
@@ -133,7 +133,7 @@ text
 ✅ pip upgraded to 26.1.1
 ✅ Reproducible setup locked in
 
-Session 6 - Date: 2026-05-11 & 2026-05-13
+## Session 6 - Date: 2026-05-11 & 2026-05-13
 Working on: Dependency and deployment debugging for the enterprise-ai-architect repository, including CI workflow fixes, requirements.txt cleanup, and GitHub Pages workflow troubleshooting.
 Next step: Update the GitHub Pages workflow so it uploads the required github-pages artifact before the deploy job runs.
 Confused by:
@@ -164,3 +164,48 @@ GitHub Pages deployment root cause identified.
 
 Next clear action established: repair the Pages workflow artifact upload path.
 
+## Session 7: Day 6 & Day 7
+**Date** : 2026-05-15 & 2026-05-16
+**Working On**: build Artifact P0-A1 in phase-0/ as a real Python program that reads a CSV and prints transaction statistics.
+**Next Step** : create sample_transactions.csv and type in data manually. after that, create a transaction_log_analyser.py and write Tests for transaction_log_analyser.py by creating a test_transaction_log_analyser.py
+**Confused by** : # Session 7 Confusion Summary
+
+## File name confusion
+- The CSV file name changed between `sample.transactions.csv` and `sample_transactions.csv`.
+- This created repeated `FileNotFoundError` problems even though the file contents were correct.
+- The confusion was about using the exact same filename in both the filesystem and the command.
+
+## Python script confusion
+- The analyzer script had several typos, including `basicCongig`, `init(...)`, wrong field names, and mismatched variable names.
+- Some functions and variables were named inconsistently, which made the script fail in different ways.
+- This made it hard to tell whether the main issue was syntax, logic, or just spelling mistakes.
+
+## Indentation confusion
+- The script produced `IndentationError` around the `if __name__ == "__main__":` block.
+- Mixed indentation and incorrectly nested functions made the file harder to debug.
+- This created the impression that the whole script was broken, even when only the structure was wrong.
+
+## Execution confusion
+- At one point the script ran but printed nothing.
+- That made it unclear whether the file was executing at all.
+- The root issue was around the entry-point structure and whether `main()` was being called correctly.
+
+## Test file confusion
+- The failing test used `pytest.raises(...)` but `pytest` was not imported in the needed scope.
+- Local progress and CI results did not seem aligned at first, which made the error feel inconsistent.
+- The actual fix was small, but it took time to isolate because the symptom appeared only in the test run.
+
+## CI workflow confusion
+- The CI workflow failed after the code had already started working locally.
+- It was unclear whether the failure came from the workflow YAML, Python version, installed packages, or the test file itself.
+- The confusion reduced once the missing `pytest` import was identified as the direct cause.
+
+## Terminal and Git confusion
+- A broken `git commit -m` command left the shell at the `>` prompt waiting for more input.
+- There was also a typo like `git coomit`, which interrupted the flow.
+- These issues were not related to Python, but they added friction and made the session feel more chaotic.
+
+## Overall pattern
+- Most confusion in Session 7 came from small mismatches: filename mismatch, import mismatch, indentation mismatch, and command syntax mismatch.
+- The work itself was valid, but tiny inconsistencies created repeated blockers.
+- Once each mismatch was corrected, the analyzer ran successfully and all 6 tests passed.

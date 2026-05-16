@@ -11,3 +11,8 @@
 **Decision:** Start date is April 30 2026
 **Reasoning:** Personal anchor date. 42-month timeline targets early 2030.
 **Status:** Closed
+## D006&D007 - 2026-05-15 & 2026-05-16
+**Decision:** build Artifact P0-A1 in phase-0/ as a real Python program that reads a CSV and prints transaction statistics
+**Reasoning:** You wanted the first artifact to be a real working program, not a placeholder, so you used a CSV analyzer that actually computes meaningful banking-style statistics.
+**Status:** Session 7 is now complete: the analyzer runs successfully, the sample CSV exists with the correct name, the tests pass locally, and the pytest import issue has been fixed and pushed.
+

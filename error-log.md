@@ -57,3 +57,82 @@ No artifacts named "github-pages" were found for this workflow run
 
 Fix needed: Add a build/upload step using actions/upload-pages-artifact@v4 and make the deploy job depend on that upload job.
 ---
+
+## Session 7:
+
+**Date** : 2026-05-15 & 2026-05-16
+# Session 7 Error Log
+
+**Error:** `FileNotFoundError: File not found: phase-0/sample_transactions.csv`  
+**Tried:**  
+- Ran `python3 phase-0/transaction_log_analyser.py phase-0/sample_transactions.csv`.  
+- Ran `python3 phase-0/transaction_log_analyser.py phase-0/sample.transactions.csv`.  
+- Renamed `sample.transactions.csv` to `sample_transactions.csv` with `mv`.  
+**Fixed by:** `mv phase-0/sample.transactions.csv phase-0/sample_transactions.csv`  
+**Why it happened:** The command used a filename that did not match the actual file path.
+
+**Error:** `SyntaxError: invalid syntax` at `processing_times.sort():`  
+**Tried:**  
+- Ran the analyzer script several times after editing.  
+- Kept correcting earlier typos and reran the file.  
+**Fixed by:** Removing the extra colon from `processing_times.sort()`  
+**Why it happened:** A stray `:` made a valid Python statement invalid.
+
+**Error:** `AttributeError: module 'logging' has no attribute 'basicCongig'. Did you mean: 'basicConfig'?`  
+**Tried:**  
+- Ran the script again after fixing the sort syntax.  
+- Reopened the file and corrected other typos.  
+**Fixed by:** Changing `logging.basicCongig` to `logging.basicConfig`  
+**Why it happened:** The function name was misspelled.
+
+**Error:** `IndentationError: unindent does not match any outer indentation level`  
+**Tried:**  
+- Re-ran the script after editing the bottom of the file.  
+- Checked the `if __name__ == "__main__":` block and surrounding code.  
+**Fixed by:** Rewriting the file with consistent 4-space indentation  
+**Why it happened:** Tabs/spaces or misaligned blocks broke Python’s indentation rules.
+
+**Error:** Script ran with no visible output  
+**Tried:**  
+- Ran `python3 phase-0/transaction_log_analyser.py phase-0/sample.transactions.csv`.  
+- Checked whether `main()` existed and whether the entry point was called.  
+**Fixed by:** Adding a correct `if __name__ == "__main__": main()` block  
+**Why it happened:** The program structure was not reaching the analyzer entry point.
+
+**Error:** `NameError: name 'pytest' is not defined`  
+**Tried:**  
+- Ran `pytest phase-0/ -v`.  
+- Added and removed `import pytest` in different places.  
+- Committed and pushed the test file, then reran CI.  
+**Fixed by:** Adding `import pytest` to `phase-0/test_transaction_log_analyser.py`  
+**Why it happened:** The test used `pytest.raises()` without importing `pytest`.
+
+**Error:** Git shell got stuck at `>` after a broken commit command  
+**Tried:**  
+- Typed a long `git commit -m` message with mismatched quotes.  
+- Entered `exit`.  
+- Pressed `Ctrl + C`.  
+**Fixed by:** `Ctrl + C`, then rerunning the commit with one properly quoted message  
+**Why it happened:** The shell was waiting for a closing quote in the unfinished command.
+
+**Error:** `git: 'coomit' is not a git command`  
+**Tried:**  
+- Typed `git coomit -m ...` instead of `git commit -m ...`.  
+**Fixed by:** Re-running the correct command: `git commit -m ...`  
+**Why it happened:** The command name was misspelled.
+
+**Error:** CI failed with `NameError: name 'pytest' is not defined`  
+**Tried:**  
+- Edited the workflow.  
+- Changed Python version to `3.12.1`.  
+- Switched test execution to `python -m pytest phase-0/ -v`.  
+- Re-ran the GitHub Actions workflow.  
+**Fixed by:** Importing `pytest` in the test file and using `python -m pytest` in CI  
+**Why it happened:** The test file was missing the import, and CI needed a reliable test command.
+
+**Error:** `bash: -: command not found` and `bash: run:: command not found`  
+**Tried:**  
+- Pasted YAML workflow lines directly into the terminal.  
+- Tried to change `.github/workflows/ci.yml` from the shell prompt instead of the editor.  
+**Fixed by:** Opening and editing `.github/workflows/ci.yml` in the editor  
+**Why it happened:** YAML was entered into Bash instead of into the workflow file.
