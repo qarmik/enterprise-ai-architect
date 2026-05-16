@@ -3,7 +3,7 @@
 import subprocess
 import sys
 import os
-
+import pytest
 
 def test_analyser_runs_without_error():
     """Analyser must run without crashing on valid input."""
