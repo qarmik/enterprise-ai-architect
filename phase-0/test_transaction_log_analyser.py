@@ -53,6 +53,7 @@ def test_compute_statistics_failure_rate():
         {'status': 'SUCCESS', 'processing_time_ms': '150',
          'transaction_type': 'CREDIT'},
     ]
+    import pytest
     import sys, os
     sys.path.insert(0, os.path.dirname(os.path.dirname(
         os.path.abspath(__file__))))
