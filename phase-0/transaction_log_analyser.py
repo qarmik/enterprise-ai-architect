@@ -98,11 +98,43 @@ def main():
         'filepath',
         help='Path to transaction CSV file'
     )
+    parser.add_argument(
+        '--output',
+        default='phase-0/reports',
+        help='Directory for report output (default: phase-0/reports)'
+    )
     args = parser.parse_args()
 
     transactions = load_transactions(args.filepath)
     stats = compute_statistics(transactions)
     print_report(stats)
+    write_report(stats, args.output)
+
+def write_report(stats: dict, output_path: str) -> None:
+    """Write report to a timestamped file."""
+    from datetime import datetime
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    filename = f"transaction_report_{timestamp}.txt"
+    full_path = Path(output_path) / filename
+
+    Path(output_path).mkdir(parents=True, exist_ok=True)
+
+    with open(full_path, 'w') as f:
+        f.write("TRANSACTION LOG ANALYSIS REPORT\n")
+        f.write("="*50 + "\n")
+        f.write(f"Generated: {datetime.now().isoformat()}\n")
+        f.write(f"Total transactions: {stats['total_transactions']}\n")
+        f.write(f"Successful: {stats['successful']}'\n")
+        f.write(f"Failed: {stats['failed']}\n")
+        f.write(f"Failure rate: {stats['failure_rate_pct']}%\n")
+        f.write(f"p50: {stats['p50_processing_ms']} ms\n")
+        f.write(f"p95: {stats['p95_processing_ms']} ms\n")
+        f.write(f"p99: {stats['p99_processing_ms']} ms\n")
+        f.write(f"Top type: {stats['top_transaction_type']}\n")
+
+    logger.info(f"Report written to {full_path}")
+    print(f"Report saved: {full_path}")
+       
 
 
 if __name__ == "__main__":
