@@ -16,3 +16,7 @@
 **Reasoning:** You wanted the first artifact to be a real working program, not a placeholder, so you used a CSV analyzer that actually computes meaningful banking-style statistics.
 **Status:** Session 7 is now complete: the analyzer runs successfully, the sample CSV exists with the correct name, the tests pass locally, and the pytest import issue has been fixed and pushed.
 
+## D008 — 2026-05-18
+**Decision:** Extend Artifact P0-A1 so the analyser writes a timestamped text report to `phase-0/reports/`
+**Reasoning:** Session 8 required the first real artifact to produce a persistent output, not just print to stdout. A timestamped text report is simple, auditable, and appropriate for Phase 0.
+**Status:** Closed

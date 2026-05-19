@@ -209,3 +209,8 @@ Next clear action established: repair the Pages workflow artifact upload path.
 - Most confusion in Session 7 came from small mismatches: filename mismatch, import mismatch, indentation mismatch, and command syntax mismatch.
 - The work itself was valid, but tiny inconsistencies created repeated blockers.
 - Once each mismatch was corrected, the analyzer ran successfully and all 6 tests passed.
+---
+**Date:** 2026-05-18
+**Working on:** Session 8 — add timestamped file output to `phase-0/transaction_log_analyser.py`, write ADR-002, and confirm CI is green
+**Next step:** Begin Session 9 by reading `versions.md`, `decisions.md`, `session-state.md`, and `error-log.md`, then define the next Phase 0 artifact change
+**Confused by:** None at session close

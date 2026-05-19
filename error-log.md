@@ -136,3 +136,10 @@ Fix needed: Add a build/upload step using actions/upload-pages-artifact@v4 and m
 - Tried to change `.github/workflows/ci.yml` from the shell prompt instead of the editor.  
 **Fixed by:** Opening and editing `.github/workflows/ci.yml` in the editor  
 **Why it happened:** YAML was entered into Bash instead of into the workflow file.
+
+---
+**Date:** 2026-05-18
+**Error:** None in Session 8
+**Tried:** Added `write_report()`, updated CLI with `--output`, added `phase-0/reports/` to `.gitignore`, ran the analyser, checked generated report, updated ADR-002
+**Fixed by:** No fix required
+**Why it happened:** Session completed without a debugging event
