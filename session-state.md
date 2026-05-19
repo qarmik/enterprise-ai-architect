@@ -214,3 +214,9 @@ Next clear action established: repair the Pages workflow artifact upload path.
 **Working on:** Session 8 — add timestamped file output to `phase-0/transaction_log_analyser.py`, write ADR-002, and confirm CI is green
 **Next step:** Begin Session 9 by reading `versions.md`, `decisions.md`, `session-state.md`, and `error-log.md`, then define the next Phase 0 artifact change
 **Confused by:** None at session close
+
+---
+**Date:** 2026-05-19
+**Working on:** Session 9 — Artifact P0-A2: `phase-0/latency_calculator.py` with latency percentiles, GPU cost model, and tests
+**Next step:** Run the latency calculator and tests, then commit and push the Session 9 changes
+**Confused by:** None at session close
