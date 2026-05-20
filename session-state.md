@@ -220,3 +220,9 @@ Next clear action established: repair the Pages workflow artifact upload path.
 **Working on:** Session 9 — Artifact P0-A2: `phase-0/latency_calculator.py` with latency percentiles, GPU cost model, and tests
 **Next step:** Run the latency calculator and tests, then commit and push the Session 9 changes
 **Confused by:** None at session close
+
+---
+**Date:** 2026-05-20
+**Working on:** Session 10 — Artifact P0-A3: REST API client in `phase-0/api_client.py` that fetches exchange rates, validates schema, saves timestamped CSV, with tests and CI
+**Next step:** Begin Session 11 by reading `versions.md`, `decisions.md`, `session-state.md`, and `error-log.md`, then define the next Phase 0 artifact change
+**Confused by:** None at session close

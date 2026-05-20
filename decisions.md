@@ -24,3 +24,7 @@
 **Decision:** Build Artifact P0-A2 as a latency statistics calculator with simulated latency percentiles and a simple GPU cost model
 **Reasoning:** Session 9 should extend Phase 0 with a second real Python artifact that demonstrates both statistical analysis and basic infrastructure cost planning.
 **Status:** Closed
+## D010 — 2026-05-20
+**Decision:** Build Artifact P0-A3 as a REST API client that fetches exchange rates from a free public API, validates JSON schema, and saves timestamped CSV
+**Reasoning:** Session 10 must extend Phase 0 with a real networked Python artifact demonstrating API calls, error handling, retry logic, and CSV persistence.
+**Status:** Closed
