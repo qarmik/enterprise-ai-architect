@@ -226,3 +226,9 @@ Next clear action established: repair the Pages workflow artifact upload path.
 **Working on:** Session 10 — Artifact P0-A3: REST API client in `phase-0/api_client.py` that fetches exchange rates, validates schema, saves timestamped CSV, with tests and CI
 **Next step:** Begin Session 11 by reading `versions.md`, `decisions.md`, `session-state.md`, and `error-log.md`, then define the next Phase 0 artifact change
 **Confused by:** None at session close
+
+**Date:** 2026-05-21
+**Working on:** Phase 0 gate review - all artifacts complete
+Next Step: Phae 1 begins - read the PagedAttention blog post
+before writing any vLLM code
+Confused by: I am not really great at Python and I am only typing the code which Claude gave me. Then I asked Claude and it said we were building the bridge through scaffolding where we will learn to code in Python at a later stage. So, today, we are learning to read code and get accustomed to various coding, jargons and syntax.

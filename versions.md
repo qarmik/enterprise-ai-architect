@@ -13,3 +13,16 @@
 # vLLM: x.x.x
 # CUDA: x.x
 # Docker: x.x.x
+
+## Phase 0 — Foundations — 2026-21-05
+- Python: 3.12.1
+- Git: 2.53.0
+- OS: Ubuntu 22.04 (GitHub Codespaces)
+- Environment: GitHub Codespaces
+- pytest : 9.0.3
+- pip : 26.1.1
+
+## Phase 1 — Inference Systems — [fill when Phase 1 begins]
+# vLLM: x.x.x
+# CUDA: x.x
+# Docker: x.x.x

@@ -19,3 +19,16 @@ database (over-engineered for Phase 0).
 Reproducible. Auditable. reports/ excluded from git 
 (generated output, not source). 
 **Status:** Closed
+
+## ADR-003 — [today's date]
+**Context:** API client needs to handle network failures gracefully.
+Options: fail immediately, retry with fixed delay, retry with
+exponential backoff.
+**Decision:** Exponential backoff with 3 retries.
+**Alternatives:** Fixed delay (simpler but wastes time on persistent
+failures), fail immediately (unacceptable for production pipelines).
+**Consequences:** Handles transient network failures automatically.
+Adds complexity but this is the production pattern used in every
+enterprise integration. Teaches the retry pattern that appears in
+Phase 2 agent tool calls and Phase 4 HITL systems.
+**Status:** Closed
