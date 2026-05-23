@@ -9,7 +9,7 @@
 **Confused by:** [sate all points of friction]
 ---
 
-#### Session 1 — 2026-05-07
+#### Phase 0 Session 1 — 2026-05-07
 ---
 **Date:** 2026-05-07
 **Working on:** Phase 0 — creating repository and system files
@@ -232,3 +232,8 @@ Next clear action established: repair the Pages workflow artifact upload path.
 Next Step: Phae 1 begins - read the PagedAttention blog post
 before writing any vLLM code
 Confused by: I am not really great at Python and I am only typing the code which Claude gave me. Then I asked Claude and it said we were building the bridge through scaffolding where we will learn to code in Python at a later stage. So, today, we are learning to read code and get accustomed to various coding, jargons and syntax.
+
+## Phase 1 - Session 1 - 2026-05-23
+**Working on:** Phase I — Session 01: reading the vLLM blog (https://vllm.ai/blog/2023-06-20-vllm)  and understanding PagedAttention, autoregressive decoding, EOS, and long-context behavior
+**Next step:** Begin the next Phase I session by rereading the vLLM blog notes and turning the key concepts into one-page plain-English summaries with analogies
+**Confused by:** The difference between model behavior, application behavior, context windows, and how stopping/decoding interact
