@@ -242,3 +242,38 @@ Confused by: I am not really great at Python and I am only typing the code which
 **Working on:** Taking a strategic pause. Looking back at Phase 0. Want to understand and internalise what I did during that phase. Otherwise it becomes another typewriting exercise. Thinking about how using AI since last several years has made my ability to recall, comprehension, visualisation, ability to connect dots, solve puzzles etc. remarkably dull. I used to be good at these and I am not sure if it's persistent outsourcing of cognition to AI which has caused this dulling or decades of staying just usefully useless inside a corporate machinery or both. I am also staring at an administrative transfer and an inevitable separation from family. Minimum 3 years of isolation, weekend family visits back to domestic base a couple of times in a month. Quite hopeful that this isolation would give me the time to rebuild engineering brain from the scratch. Bought everything with an apple logo - from phone to earphones along with Ray Ban Meta Gen2 glasses. Purchasing AI Inference related hardware (MacMini or B70) postponed to Phase 4 of the curriculum after consultation with Claude and Commander V. Cloud based subscriptions like Colab Pro should be enough till that point in time. Ecosystem is complete for now. Transfer orders will come in the next couple of weeks. Family has no idea about what I am planning to do with my life. But that's okay. I have walked out of similar phases before. I'll fix whatever that is not good for the curriculum during this pause. Thinking about vibe coding a "Clarify Layer - (Ask Again)" so that I can really start using AI effectively to learn. The Ask Again feature would enable me to highlight portions of the AI's response which I did not understand, ask for furthre explanation and regenerate response and allow me to iterate untill the comprehension is total and internalised with a proof of work generation feature only after AI ratifies my understanding of the concept which I would write in my own words. I'll not waste too much time on it though. Will try to move past the architectural roadblock I faced while continuing to build Mnemos. Created several playslists on Spotify and curated and handpicked a few podcasts for alignment check with the target industry.
 **Next Step:** Vibe code "Clarify Layer- Ask Again" and move past the Mnemos architectural roadblock by 2026-05-31. If unable to do that by 2026-05-31, then relegate them both only to available deep sessions and focus back on the curriculum.
 **Confused By:** Is AI being helpful or making me helpless without it? 
+
+## Phase-0 B - Comprehension Reconstruction 
+I initially completed the Phase 0 artifacts as execution tasks.
+That created working code, tests, and CI, but it exposed a gap:
+I could run the system before I could fully explain the system.
+
+So I am now adding a comprehension layer beneath Phase 0:
+line-by-line explanations,
+concept notes,
+failure-mode notes,
+banking analogies,
+and reconstruction exercises.
+
+The artifacts remain.
+The interpretation matures.
+
+So, the new move is : 
+Phase 0-A: Artifact Bootstrap
+Phase 0-B: Comprehension Reconstruction
+
+Because real engineering is:
+
+build
+observe gap
+write postmortem
+correct process
+strengthen system
+continue
+
+The goal is to align:
+
+artifact
+understanding
+explanation
+debugging ability
