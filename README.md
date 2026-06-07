@@ -72,6 +72,7 @@ The curriculum was designed by Claude (Anthropic) and stress-tested adversariall
 - Curriculum: `https://qarmik.github.io/enterprise-ai-architect/curriculum.html`
 - Study Tracker: `https://qarmik.github.io/enterprise-ai-architect/study-tracker.html`
 - Phase 0 Book of Instructions: `https://qarmik.github.io/enterprise-ai-architect/phase-0-book-of-instructions.html`
+- Syntax Origins: `https://qarmik.github.io/python-syntax-origins.html`
 
 ---
 
