@@ -277,3 +277,11 @@ artifact
 understanding
 explanation
 debugging ability
+
+## Phase 0-B - addition of phase-0-book-of-instructions.html and python-syntax-origins.html
+
+After realising that the progress which I had made in Phase-0 so far was literally hollow with zero understanding, I decided to first create a detailed blueprint of what I will be doing in Phase-0 for my understanding of the artifacts and the engineering processes. Claude created phase-0-book-of-instructions.html to help me stay on track. The book is an explainer for everything which I will come across in the phase-0 so that I don't move past any topic without fully internalising first.
+Then, I shifted my focus to the real bottleneck - Python. I had been trying to understand/learn coding in Python. First, I joine Zero to Mastery (ZTM) by Andrei Neagoie and then bought an annual subscription of boot.dev last year in October 2025. Nothing has worked so far and I am still pathetically bad at writing or reading code myself. I though a lot about the gap. First, it seemed that the gap was in intelligence. Then Claude helped me frame the problem/gap correctly. I realised that the real gap was not in intelligence but in being present within the code. I asked that how could I read or write code if I was present within the Universe of the code itself. This framing of the problem led me to the debugger-first learning loop where I can see how things we type in a line of code, changes the output. 
+But that was not enough. Then I realised that my real problem was not being able to understand the syntax to begin with. Claude helped me again and created a HTML fil which I have just committed to Github. That file is python-syntax-origins.html.
+Although I have figured out a way across the problem which I faced in Mnemos, that and other works are temporarily on hold.  
+Today is 7th of June, 2026 and I hope that the transfer orders would come by in the next 3-5 days.
