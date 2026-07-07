@@ -285,3 +285,11 @@ Then, I shifted my focus to the real bottleneck - Python. I had been trying to u
 But that was not enough. Then I realised that my real problem was not being able to understand the syntax to begin with. Claude helped me again and created a HTML fil which I have just committed to Github. That file is python-syntax-origins.html.
 Although I have figured out a way across the problem which I faced in Mnemos, that and other works are temporarily on hold.  
 Today is 7th of June, 2026 and I hope that the transfer orders would come by in the next 3-5 days.
+
+## Relocation complete - 07th of July, 2026
+
+The transfer orders came in on 25/06/2026 and I was relieved from my previous office on the very same day. I was on a family vacation so relieving was unceremonious. In fact, that was how I wanted it to be. My relationship with my current organisation has become purely transactional. I perform my job and get my salary on the 25th of every month which pays the mortgage and my bills. Within my mind, I am already detached. When I opened my laptop, I had no clue how to get here and type this because this laptop is running on Linux. I asked AI and here I am. I have set up my workstation with a two laptops - one running on Linux and the other is a Macbook and a fairly additional monitor. The set looks cool. My landlord is a nice person and I don't have to worry about my meals because they provide all of them for a very fair price. My new office is about 4 kms from this location. The town is small and I visit my family every weekend. So, I just have 5 days in a week to study. Fortunately, I got a backend job at the new office which allows me to get back to the base by 7:30 pm and I leave for work at 09:30 am. Hoping to manage 2 hours in the PM and 2 in the AM. So, this is it. I'll start session 12A which is described as below:
+
+## Session 12 A- comprehension of transaction_log_analyser.py, no new code written.
+
+For each function, close the file and write: what problem existed before it, what breaks if it disappears, and the one line you're least sure of. Then sketch each function's skeleton from memory into phase-0/comprehension-notes.md -- do not commit until the from-memory sketch matches the real thing. 
